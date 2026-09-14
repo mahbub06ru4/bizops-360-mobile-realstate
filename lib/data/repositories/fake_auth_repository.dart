@@ -13,7 +13,7 @@ class FakeAuthRepository implements AuthRepository {
   static const _demoUser = AuthUser(
     id: 1,
     name: 'Nadia Haque',
-    email: 'manager@wanderlust.test',
+    email: 'manager@greenland.test',
     roles: ['manager'],
     permissions: [
       'task.view',
@@ -29,20 +29,17 @@ class FakeAuthRepository implements AuthRepository {
       'expense.create',
       'expense.update',
       'employee_document.view',
-      'traveller.view',
-      'traveller.create',
-      'traveller.update',
-      'visa_application.view',
-      'visa_application.update',
-      'booking.view',
-      'booking.update',
+      'real_estate_project.view',
+      'real_estate_project.create',
+      'real_estate_project.update',
+      'real_estate_project.submit',
       'finance.view_reports',
     ],
     tenant: Tenant(
       id: 1,
-      name: 'Wanderlust Travel',
-      slug: 'wanderlust',
-      industry: 'travel',
+      name: 'Greenland Properties',
+      slug: 'greenland',
+      industry: 'real_estate',
     ),
   );
 

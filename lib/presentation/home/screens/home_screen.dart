@@ -11,16 +11,14 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../domain/entities/follow_up.dart';
 import '../../../domain/entities/task_item.dart';
-import '../../../modules/travel/dashboard/pending_visa_docs_section.dart';
-import '../../../modules/travel/dashboard/ticket_tasks_section.dart';
-import '../../../modules/travel/dashboard/visa_summary_section.dart';
+import '../../../modules/real_estate/dashboard/my_projects_section.dart';
 import '../../crm/controllers/follow_ups_controller.dart';
 import '../../notifications/controllers/notifications_controller.dart';
 import '../../tasks/controllers/tasks_controller.dart';
 import '../widgets/agenda_section.dart';
 import '../widgets/quick_actions_section.dart';
 
-/// The operational travel dashboard. A greeting header over a stack of
+/// The operational real-estate dashboard. A greeting header over a stack of
 /// permission-gated [DashboardSection]s — compose, don't grow a build method.
 ///
 /// Sections read the same live controllers/repositories their full screens
@@ -99,22 +97,10 @@ class HomeScreen extends StatelessWidget {
           children: [
             const QuickActionsSection(),
             const Can(
-              Perm.visaView,
-              feature: Feature.travelVisa,
-              travelOnly: true,
-              child: VisaSummarySection(),
-            ),
-            const Can(
-              Perm.visaView,
-              feature: Feature.travelVisa,
-              travelOnly: true,
-              child: PendingVisaDocsSection(),
-            ),
-            const Can(
-              Perm.bookingView,
-              feature: Feature.travelBookings,
-              travelOnly: true,
-              child: TicketTasksSection(),
+              Perm.projectView,
+              feature: Feature.realEstateProjects,
+              industryOnly: true,
+              child: MyProjectsSection(),
             ),
             const Can(
               Perm.followUpManage,

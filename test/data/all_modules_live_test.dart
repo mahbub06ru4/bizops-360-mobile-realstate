@@ -2,12 +2,10 @@
 library;
 
 import 'package:bizops360_mobile/core/network/api_client.dart';
-import 'package:bizops360_mobile/data/datasources/booking_remote_datasource.dart';
 import 'package:bizops360_mobile/data/datasources/crm_remote_datasource.dart';
 import 'package:bizops360_mobile/data/datasources/notification_remote_datasource.dart';
 import 'package:bizops360_mobile/data/datasources/report_remote_datasource.dart';
 import 'package:bizops360_mobile/data/datasources/task_remote_datasource.dart';
-import 'package:bizops360_mobile/data/repositories/booking_repository_impl.dart';
 import 'package:bizops360_mobile/data/repositories/crm_repository_impl.dart';
 import 'package:bizops360_mobile/data/repositories/notification_repository_impl.dart';
 import 'package:bizops360_mobile/data/repositories/report_repository_impl.dart';
@@ -80,17 +78,6 @@ void main() {
       expect(history.isOk, isTrue);
     }
     expect((await repo.followUps()).isOk, isTrue);
-  });
-
-  test('bookings list + detail', () async {
-    final repo = BookingRepositoryImpl(BookingRemoteDataSource(client));
-    final list = await repo.bookings();
-    expect(list.isOk, isTrue, reason: list.failureOrNull?.message);
-    if (list.valueOrNull!.isNotEmpty) {
-      final one = await repo.byId(list.valueOrNull!.first.id);
-      expect(one.isOk, isTrue);
-    }
-    expect((await repo.departures()).isOk, isTrue);
   });
 
   test('reports overview composes the module dashboards', () async {

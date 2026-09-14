@@ -1,14 +1,21 @@
 import 'package:get/get.dart';
 
-import '../../modules/travel/bookings/bindings/bookings_bindings.dart';
-import '../../modules/travel/bookings/screens/booking_detail_screen.dart';
-import '../../modules/travel/bookings/screens/bookings_screen.dart';
-import '../../modules/travel/bookings/screens/departures_screen.dart';
-import '../../modules/travel/travellers/bindings/travellers_bindings.dart';
-import '../../modules/travel/travellers/screens/traveller_detail_screen.dart';
-import '../../modules/travel/travellers/screens/travellers_screen.dart';
-import '../../modules/travel/visa/bindings/visa_bindings.dart';
-import '../../modules/travel/visa/screens/visa_detail_screen.dart';
+import '../../modules/real_estate/offers/bindings/offers_binding.dart';
+import '../../modules/real_estate/offers/screens/new_offer_screen.dart';
+import '../../modules/real_estate/offers/screens/offer_thread_screen.dart';
+import '../../modules/real_estate/offers/screens/offers_screen.dart';
+import '../../modules/real_estate/projects/bindings/real_estate_bindings.dart';
+import '../../modules/real_estate/projects/screens/post_project_screen.dart';
+import '../../modules/real_estate/projects/screens/project_detail_screen.dart';
+import '../../modules/real_estate/projects/screens/projects_screen.dart';
+import '../../modules/real_estate/re_bookings/bindings/re_bookings_binding.dart';
+import '../../modules/real_estate/re_bookings/screens/re_booking_detail_screen.dart';
+import '../../modules/real_estate/re_bookings/screens/re_bookings_screen.dart';
+import '../../modules/real_estate/requirements/bindings/requirements_binding.dart';
+import '../../modules/real_estate/requirements/screens/matches_screen.dart';
+import '../../modules/real_estate/requirements/screens/requirement_form_screen.dart';
+import '../../modules/real_estate/site_visits/bindings/site_visits_binding.dart';
+import '../../modules/real_estate/site_visits/screens/site_visits_screen.dart';
 import '../../presentation/auth/bindings/sign_in_binding.dart';
 import '../../presentation/auth/screens/sign_in_screen.dart';
 import '../../presentation/common/coming_soon_screen.dart';
@@ -120,39 +127,64 @@ abstract final class AppPages {
     // No binding — reuses the ExpensesController from the ExpensesScreen beneath.
     _guarded(Routes.expenseNew, () => const ExpenseNewScreen()),
     _guarded(
-      Routes.visaDetail,
-      () => const VisaDetailScreen(),
-      binding: VisaDetailBinding(),
-    ),
-    _guarded(
       Routes.documents,
       () => const DocumentsScreen(),
       binding: DocumentsBinding(),
     ),
     _guarded(
-      Routes.travellers,
-      () => const TravellersScreen(),
-      binding: TravellersBinding(),
+      Routes.projects,
+      () => const ProjectsScreen(),
+      binding: ProjectsBinding(),
     ),
     _guarded(
-      Routes.travellerDetail,
-      () => const TravellerDetailScreen(),
-      binding: TravellerDetailBinding(),
+      Routes.postProject,
+      () => const PostProjectScreen(),
+      binding: PostProjectBinding(),
     ),
     _guarded(
-      Routes.bookings,
-      () => const BookingsScreen(),
-      binding: BookingsBinding(),
+      Routes.projectDetail,
+      () => const ProjectDetailScreen(),
+      binding: ProjectDetailBinding(),
     ),
     _guarded(
-      Routes.bookingDetail,
-      () => const BookingDetailScreen(),
-      binding: BookingDetailBinding(),
+      Routes.requirementForm,
+      () => const RequirementFormScreen(),
+      binding: RequirementFormBinding(),
     ),
     _guarded(
-      Routes.departures,
-      () => const DeparturesScreen(),
-      binding: DeparturesBinding(),
+      Routes.propertyMatches,
+      () => const MatchesScreen(),
+      binding: MatchesBinding(),
+    ),
+    _guarded(
+      Routes.siteVisits,
+      () => const SiteVisitsScreen(),
+      binding: SiteVisitsBinding(),
+    ),
+    _guarded(
+      Routes.offers,
+      () => const OffersScreen(),
+      binding: OffersBinding(),
+    ),
+    _guarded(
+      Routes.offerThread,
+      () => const OfferThreadScreen(),
+      binding: OfferThreadBinding(),
+    ),
+    _guarded(
+      Routes.newOffer,
+      () => const NewOfferScreen(),
+      binding: NewOfferBinding(),
+    ),
+    _guarded(
+      Routes.reBookings,
+      () => const ReBookingsScreen(),
+      binding: ReBookingsBinding(),
+    ),
+    _guarded(
+      Routes.reBookingDetail,
+      () => const ReBookingDetailScreen(),
+      binding: ReBookingDetailBinding(),
     ),
     _guarded(
       Routes.reports,

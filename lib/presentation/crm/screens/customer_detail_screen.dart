@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 
 import '../../../core/extensions/money_format.dart';
 import '../../../core/localization/translation_keys.dart';
+import '../../../core/permissions/can.dart';
+import '../../../core/permissions/permissions.dart';
+import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../domain/entities/customer.dart';
@@ -56,6 +59,20 @@ class CustomerDetailScreen extends GetView<CustomerDetailController> {
           ],
         ),
         SizedBox(height: AppSpacing.md),
+        Can(
+          Perm.requirementManage,
+          industryOnly: true,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: AppSpacing.md),
+            child: AppButton(
+              label: Tr.reqCapture.tr,
+              icon: Icons.checklist_outlined,
+              variant: AppButtonVariant.secondary,
+              onPressed: () =>
+                  Get.toNamed<void>(Routes.requirementForm, arguments: c),
+            ),
+          ),
+        ),
         Row(
           children: [
             Expanded(

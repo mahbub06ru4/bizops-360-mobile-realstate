@@ -7,23 +7,26 @@ void main() {
       final user = authUserFromJson(const {
         'id': 7,
         'name': 'Rahim Uddin',
-        'email': 'rahim@wanderlust.test',
+        'email': 'rahim@greenland.test',
         'roles': ['staff'],
-        'permissions': ['booking.view', 'booking.create', 'traveller.view'],
+        'permissions': [
+          'real_estate_project.view',
+          'real_estate_project.create',
+        ],
         'tenant': {
           'id': 1,
-          'name': 'Wanderlust Travel',
-          'slug': 'wanderlust',
-          'industry': 'travel',
+          'name': 'Greenland Properties',
+          'slug': 'greenland',
+          'industry': 'real_estate',
         },
       });
 
       expect(user.id, 7);
-      expect(user.email, 'rahim@wanderlust.test');
-      expect(user.can('booking.create'), isTrue);
+      expect(user.email, 'rahim@greenland.test');
+      expect(user.can('real_estate_project.create'), isTrue);
       expect(user.can('invoice.refund'), isFalse);
       expect(user.isManager, isFalse);
-      expect(user.tenant?.isTravel, isTrue);
+      expect(user.tenant?.isRealEstate, isTrue);
       expect(user.initials, 'RU');
     });
 

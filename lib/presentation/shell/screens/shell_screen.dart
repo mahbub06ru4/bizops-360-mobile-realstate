@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../application/navigation/shell_controller.dart';
 import '../../../core/localization/translation_keys.dart';
-import '../../../modules/travel/visa/screens/visa_queue_screen.dart';
+import '../../../modules/real_estate/projects/screens/projects_screen.dart';
 import '../../customers/screens/customers_screen.dart';
 import '../../home/screens/home_screen.dart';
 import '../../tasks/screens/tasks_screen.dart';
@@ -29,11 +29,11 @@ class ShellScreen extends GetView<ShellController> {
         selectedIcon: Icons.people,
         page: const CustomersScreen(),
       ),
-      ShellTabId.visa => (
-        labelKey: Tr.navVisa,
-        icon: Icons.description_outlined,
-        selectedIcon: Icons.description,
-        page: const VisaQueueScreen(),
+      ShellTabId.projects => (
+        labelKey: Tr.navProjects,
+        icon: Icons.apartment_outlined,
+        selectedIcon: Icons.apartment,
+        page: const ProjectsScreen(),
       ),
       ShellTabId.tasks => (
         labelKey: Tr.navTasks,

@@ -11,7 +11,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 
 /// The "More" tab: role-aware access to the common platform. Bottom nav stays
-/// travel-focused; everything else is reached here.
+/// real-estate-focused; everything else is reached here.
 class WorkspaceScreen extends StatelessWidget {
   const WorkspaceScreen({super.key});
 
@@ -94,24 +94,30 @@ class WorkspaceScreen extends StatelessWidget {
             ),
           ]),
 
-          if (Get.find<PermissionsController>().isTravel)
-            _Group(Tr.wsSectionTravel.tr, [
+          if (Get.find<PermissionsController>().isRealEstate)
+            _Group(Tr.wsSectionRealEstate.tr, [
               _Row(
-                Icons.groups_2_outlined,
-                Tr.wsTravellers.tr,
-                () => Get.toNamed<void>(Routes.travellers),
-                permission: Perm.travellerView,
+                Icons.apartment_outlined,
+                Tr.wsProjects.tr,
+                () => Get.toNamed<void>(Routes.projects),
+                permission: Perm.projectView,
               ),
               _Row(
-                Icons.flight_outlined,
+                Icons.event_outlined,
+                Tr.wsSiteVisits.tr,
+                () => Get.toNamed<void>(Routes.siteVisits),
+                permission: Perm.siteVisitView,
+              ),
+              _Row(
+                Icons.handshake_outlined,
+                Tr.wsOffers.tr,
+                () => Get.toNamed<void>(Routes.offers),
+                permission: Perm.offerView,
+              ),
+              _Row(
+                Icons.key_outlined,
                 Tr.wsBookings.tr,
-                () => Get.toNamed<void>(Routes.bookings),
-                permission: Perm.bookingView,
-              ),
-              _Row(
-                Icons.flight_takeoff_outlined,
-                Tr.wsDepartures.tr,
-                () => Get.toNamed<void>(Routes.departures),
+                () => Get.toNamed<void>(Routes.reBookings),
                 permission: Perm.bookingView,
               ),
             ]),

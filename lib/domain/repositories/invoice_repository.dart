@@ -7,14 +7,6 @@ abstract interface class InvoiceRepository {
 
   Future<Result<Invoice>> byId(String id);
 
-  /// Raise an invoice against an issued booking (spec §6
-  /// `Actions/Invoices/CreateInvoice`). The backend resolves the customer and
-  /// amount from the booking itself.
-  Future<Result<Invoice>> createFromBooking({
-    required String bookingId,
-    required DateTime dueDate,
-  });
-
   /// Record a payment against an invoice (`Actions/Invoices/RecordPayment`).
   /// The invoice moves to `partial` or `paid` depending on the new total.
   Future<Result<Invoice>> recordPayment({
@@ -22,5 +14,17 @@ abstract interface class InvoiceRepository {
     required num amount,
     required String method,
     String? note,
+  });
+
+  /// Raises a new invoice for another module's billable line item — used by
+  /// the real-estate booking/installment flow's "generate invoice" action
+  /// (roadmap §7: installments are wired into this existing Finance module
+  /// rather than a parallel ledger). [bookingReference] carries a
+  /// human-readable reference back to the originating booking/installment.
+  Future<Result<Invoice>> createFromReference({
+    required String customerName,
+    required num amount,
+    required DateTime dueDate,
+    String? bookingReference,
   });
 }

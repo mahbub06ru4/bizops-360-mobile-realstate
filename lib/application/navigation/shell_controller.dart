@@ -7,16 +7,17 @@ import '../permissions/permissions_controller.dart';
 /// The distinct shell destinations. The screen for each is resolved in the
 /// presentation layer — this controller only decides which appear and in what
 /// order.
-enum ShellTabId { home, customers, visa, tasks, workspace }
+enum ShellTabId { home, customers, projects, tasks, workspace }
 
-/// Pure tab-selection rule. Travel baseline: Home · Customers · Visa · Tasks ·
-/// More, each gated by permission + enabled feature; Home and More always show.
+/// Pure tab-selection rule. Real-estate baseline: Home · Customers · Projects
+/// · Tasks · More, each gated by permission + enabled feature; Home and More
+/// always show.
 List<ShellTabId> shellTabsFor(PermissionResolver r) => [
   ShellTabId.home,
-  if (r.canAny(const [Perm.customerView, Perm.travellerView]))
-    ShellTabId.customers,
-  if (r.isTravel && r.allows(Perm.visaView, feature: Feature.travelVisa))
-    ShellTabId.visa,
+  if (r.can(Perm.customerView)) ShellTabId.customers,
+  if (r.isRealEstate &&
+      r.allows(Perm.projectView, feature: Feature.realEstateProjects))
+    ShellTabId.projects,
   if (r.allows(Perm.taskView, feature: Feature.tasks)) ShellTabId.tasks,
   ShellTabId.workspace,
 ];

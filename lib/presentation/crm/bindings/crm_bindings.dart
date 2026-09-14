@@ -10,7 +10,10 @@ import '../controllers/customer_detail_controller.dart';
 import '../controllers/customers_controller.dart';
 import '../controllers/follow_ups_controller.dart';
 
-void _ensureCrmRepo() => registerRepo<CrmRepository>(
+/// Public so features outside `presentation/crm/` (e.g. the real-estate
+/// site-visit scheduler, which needs the lead list) can pull `CrmRepository`
+/// in without a full `CustomersBinding`.
+void ensureCrmRepo() => registerRepo<CrmRepository>(
   (client) => CrmRepositoryImpl(CrmRemoteDataSource(client)),
   FakeCrmRepository.new,
 );
@@ -18,7 +21,7 @@ void _ensureCrmRepo() => registerRepo<CrmRepository>(
 class CustomersBinding extends Bindings {
   @override
   void dependencies() {
-    _ensureCrmRepo();
+    ensureCrmRepo();
     Get.lazyPut<CustomersController>(() => CustomersController(Get.find()));
   }
 }
@@ -26,7 +29,7 @@ class CustomersBinding extends Bindings {
 class CustomerDetailBinding extends Bindings {
   @override
   void dependencies() {
-    _ensureCrmRepo();
+    ensureCrmRepo();
     final arg = Get.arguments;
     final seed = arg is Customer ? arg : null;
     final id = seed?.id ?? (arg is String ? arg : '');
@@ -39,7 +42,7 @@ class CustomerDetailBinding extends Bindings {
 class FollowUpsBinding extends Bindings {
   @override
   void dependencies() {
-    _ensureCrmRepo();
+    ensureCrmRepo();
     Get.lazyPut<FollowUpsController>(() => FollowUpsController(Get.find()));
   }
 }

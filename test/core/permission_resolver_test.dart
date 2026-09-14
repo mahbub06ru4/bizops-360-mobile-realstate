@@ -4,23 +4,23 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('PermissionResolver', () {
     const r = PermissionResolver(
-      permissions: {'task.view', 'visa_application.view'},
+      permissions: {'task.view', 'real_estate_project.view'},
       roles: {'manager'},
       enabledFeatures: {'tasks'},
-      industry: 'travel',
+      industry: 'real_estate',
     );
 
     test('can / canAny / canAll', () {
       expect(r.can('task.view'), isTrue);
       expect(r.can('task.create'), isFalse);
-      expect(r.canAny(['task.create', 'visa_application.view']), isTrue);
-      expect(r.canAll(['task.view', 'visa_application.view']), isTrue);
+      expect(r.canAny(['task.create', 'real_estate_project.view']), isTrue);
+      expect(r.canAll(['task.view', 'real_estate_project.view']), isTrue);
       expect(r.canAll(['task.view', 'task.create']), isFalse);
     });
 
-    test('isManager and isTravel from roles / industry', () {
+    test('isManager and isRealEstate from roles / industry', () {
       expect(r.isManager, isTrue);
-      expect(r.isTravel, isTrue);
+      expect(r.isRealEstate, isTrue);
       expect(const PermissionResolver.empty().isManager, isFalse);
     });
 
@@ -34,7 +34,7 @@ void main() {
     test('allows combines permission and feature', () {
       expect(r.allows('task.view', feature: 'tasks'), isTrue);
       expect(r.allows('task.view', feature: 'crm'), isFalse);
-      expect(r.allows('visa_application.view'), isTrue);
+      expect(r.allows('real_estate_project.view'), isTrue);
     });
   });
 }

@@ -8,8 +8,9 @@ class FakeInvoiceRepository implements InvoiceRepository {
   FakeInvoiceRepository() : _items = _seed();
 
   List<Invoice> _items;
-  var _nextInvoiceId = 500;
   var _nextPaymentId = 900;
+  var _nextInvoiceId = 900;
+  var _nextInvoiceNumber = 2100;
 
   static DateTime _days(int d) => DateTime.now().add(Duration(days: d));
 
@@ -94,24 +95,6 @@ class FakeInvoiceRepository implements InvoiceRepository {
   }
 
   @override
-  Future<Result<Invoice>> createFromBooking({
-    required String bookingId,
-    required DateTime dueDate,
-  }) {
-    final invoice = Invoice(
-      id: 'inv${_nextInvoiceId++}',
-      reference: 'INV-${_nextInvoiceId}00',
-      customerName: 'Booking $bookingId customer',
-      amount: 0,
-      dueDate: dueDate,
-      status: InvoiceStatus.unpaid,
-      bookingReference: bookingId,
-    );
-    _items = [invoice, ..._items];
-    return _delayed(Result.ok(invoice));
-  }
-
-  @override
   Future<Result<Invoice>> recordPayment({
     required String invoiceId,
     required num amount,
@@ -140,5 +123,25 @@ class FakeInvoiceRepository implements InvoiceRepository {
       ],
     );
     return _delayed(_replace(updated));
+  }
+
+  @override
+  Future<Result<Invoice>> createFromReference({
+    required String customerName,
+    required num amount,
+    required DateTime dueDate,
+    String? bookingReference,
+  }) {
+    final invoice = Invoice(
+      id: 'inv${_nextInvoiceId++}',
+      reference: 'INV-${_nextInvoiceNumber++}',
+      customerName: customerName,
+      amount: amount,
+      dueDate: dueDate,
+      status: InvoiceStatus.unpaid,
+      bookingReference: bookingReference,
+    );
+    _items = [invoice, ..._items];
+    return _delayed(Result.ok(invoice));
   }
 }

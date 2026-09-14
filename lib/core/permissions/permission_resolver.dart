@@ -23,7 +23,7 @@ class PermissionResolver extends Equatable {
   /// `travel` | `real_estate` | `consultancy` | null.
   final String? industry;
 
-  bool get isTravel => industry == 'travel';
+  bool get isRealEstate => industry == 'real_estate';
 
   bool hasRole(String role) => roles.contains(role);
 

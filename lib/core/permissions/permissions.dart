@@ -37,14 +37,23 @@ abstract final class Perm {
   static const invoiceManage = 'invoice.update';
   static const paymentRecord = 'invoice.record_payment';
 
-  // Travel (industry:travel)
-  static const travellerView = 'traveller.view';
-  static const travellerCreate = 'traveller.create';
-  static const travellerManage = 'traveller.update';
-  static const visaView = 'visa_application.view';
-  static const visaManage = 'visa_application.update';
-  static const bookingView = 'booking.view';
-  static const bookingManage = 'booking.update';
+  // Real estate (industry:real_estate)
+  static const projectView = 'real_estate_project.view';
+  static const projectCreate = 'real_estate_project.create';
+  static const projectManage = 'real_estate_project.update';
+  static const projectSubmit = 'real_estate_project.submit';
+
+  // Real estate — Phase 1 sales pipeline (industry:real_estate). Lead-level
+  // viewing/editing reuses the existing CRM `customerView`/`customerManage`
+  // grants — these only cover the pipeline-specific sub-resources.
+  static const requirementManage = 'property_requirement.manage';
+  static const siteVisitView = 'site_visit.view';
+  static const siteVisitManage = 'site_visit.manage';
+  static const offerView = 'offer.view';
+  static const offerManage = 'offer.manage';
+  static const bookingView = 'real_estate_booking.view';
+  static const bookingManage = 'real_estate_booking.manage';
+  static const installmentManage = 'installment.manage';
 
   // Reports / dashboards
   static const reportsView = 'finance.view_reports';
@@ -59,7 +68,6 @@ abstract final class Feature {
   static const crm = 'crm';
   static const expenses = 'expenses';
   static const documents = 'documents';
-  static const travelVisa = 'travel_visa';
-  static const travelBookings = 'travel_bookings';
+  static const realEstateProjects = 'real_estate_projects';
   static const reports = 'reports';
 }

@@ -17,9 +17,9 @@ class QuickActionsSection extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     final actions = <(IconData, String)>[
-      if (r.isTravel && r.can(Perm.bookingManage))
-        (Icons.flight_takeoff, Tr.homeQaNewBooking.tr),
-      if (r.canAny(const [Perm.customerManage, Perm.travellerManage]))
+      if (r.isRealEstate && r.can(Perm.projectManage))
+        (Icons.add_business_outlined, Tr.homeQaNewProject.tr),
+      if (r.can(Perm.customerManage))
         (Icons.person_add_alt, Tr.homeQaNewCustomer.tr),
       if (r.can(Perm.taskCreate)) (Icons.add_task, Tr.homeQaNewTask.tr),
       if (r.allows(Perm.attendanceSelf, feature: Feature.attendance))

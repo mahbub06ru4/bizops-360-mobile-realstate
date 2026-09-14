@@ -1,7 +1,7 @@
 ---
 name: bizops-mobile
 description: >-
-  BizOps 360 Flutter app conventions — one multi-tenant, Travel-Agency-first app
+  BizOps 360 Flutter app conventions — one multi-tenant, Real-Estate-first app
   on GetX (state/routing/DI); the layered path
   (Screen/GetView → Controller → Use Case → Repository → DataSource → Dio);
   pure-Dart domain; Result<T>/sealed Failure error handling; permission-driven
@@ -19,7 +19,7 @@ the how-to behind the rules. The visual target is the approved design mockup
 (hangar-green ink, terminal-grey ground, wayfinding amber; Bricolage Grotesque /
 Public Sans / IBM Plex Mono / Hind Siliguri).
 
-**One app, not many.** Multi-tenant, role- and permission-aware, Travel Agency
+**One app, not many.** Multi-tenant, role- and permission-aware, Real Estate
 first. Never fork the app or duplicate features per role — adapt by
 `tenant → industry → role → permissions → enabled features`.
 
@@ -43,8 +43,8 @@ Screen (GetView<Controller>)        ← no logic, no direct Dio / repo Get.find
   is confined to `core/network/dio_failure_mapper.dart`.
 - A `ValidationFailure` carries `errors` (field → messages); surface with
   `forField('email')` into `InputDecoration.errorText`.
-- **Travel rules stay in `lib/modules/travel/`.** The common platform
-  (`lib/presentation/**`) must not import from `modules/travel/`.
+- **Real-estate rules stay in `lib/modules/real_estate/`.** The common
+  platform (`lib/presentation/**`) must not import from `modules/real_estate/`.
 
 ## GetX
 
@@ -70,11 +70,12 @@ Screen (GetView<Controller>)        ← no logic, no direct Dio / repo Get.find
 - Gate nav items, screens, actions and buttons with the `Can(permission)` widget
   / `PermissionsController` — **never** scatter raw role-string checks.
 - The backend is the security authority; always handle a 403 gracefully.
-- Bottom nav is travel-focused and dynamic: baseline `Home | Customers | Visa |
-  Tasks | More`, filtered by permissions + enabled features. Common capabilities
-  (Profile, Attendance, Leave, Expenses, Documents, Team, Reports, Settings, …)
-  live under **More / Workspace**. Don't put every module in the bar.
-- Home is an operational travel dashboard composed from reusable
+- Bottom nav is real-estate-focused and dynamic: baseline `Home | Customers |
+  Projects | Tasks | More`, filtered by permissions + enabled features. Common
+  capabilities (Profile, Attendance, Leave, Expenses, Documents, Team, Reports,
+  Settings, …) live under **More / Workspace**. Don't put every module in the
+  bar.
+- Home is an operational real-estate dashboard composed from reusable
   `DashboardSection` widgets — not one giant `HomeScreen`.
 
 ## Theme, tokens & localization
@@ -88,7 +89,7 @@ Screen (GetView<Controller>)        ← no logic, no direct Dio / repo Get.find
   in `app/app.dart`). Use `.w` / `.h` / `.r` for sizing and `.sp` for raw font
   sizes; tokens are already in those units, so widgets mostly read tokens.
 - Type: `Theme.of(context).textTheme` for prose; `AppTypography.mono(color)` for
-  PNRs, flight numbers, references and money (`৳`, 2-2-3 grouping, lakh/crore).
+  references, unit/plot numbers and money (`৳`, 2-2-3 grouping, lakh/crore).
 - Every string is a `Tr.*` key with `en` **and** `bn` entries in
   `app_translations.dart` — including validation, errors, empty states,
   notifications. New feature → new key group. Layouts must tolerate EN/BN length
@@ -128,6 +129,7 @@ where the backend gates it. Then summarise changed files + output.
 Put logic in widgets or controllers · import Flutter/Dio/GetX from `domain/` ·
 expose `DioException` above the data layer · hard-code colours, metrics, English
 strings, tenant IDs, roles or production URLs · scatter role checks in the UI ·
-construct `Dio()` outside `ApiClient` · import `modules/travel/` from the common
-platform · fork the app per role · add a package or a state-management framework
-without a clear need · skip the `bn` translation · do unrelated refactoring.
+construct `Dio()` outside `ApiClient` · import `modules/real_estate/` from the
+common platform · fork the app per role · add a package or a state-management
+framework without a clear need · skip the `bn` translation · do unrelated
+refactoring.

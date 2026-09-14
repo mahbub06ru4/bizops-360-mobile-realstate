@@ -16,7 +16,7 @@ class Tenant extends Equatable {
   /// module (and nav tab) the app exposes.
   final String? industry;
 
-  bool get isTravel => industry == 'travel';
+  bool get isRealEstate => industry == 'real_estate';
 
   @override
   List<Object?> get props => [id, name, slug, industry];

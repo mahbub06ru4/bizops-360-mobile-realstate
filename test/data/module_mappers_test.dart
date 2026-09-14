@@ -1,9 +1,7 @@
-import 'package:bizops360_mobile/data/models/booking_mappers.dart';
 import 'package:bizops360_mobile/data/models/crm_mappers.dart';
 import 'package:bizops360_mobile/data/models/hr_mappers.dart';
 import 'package:bizops360_mobile/data/models/notification_mappers.dart';
 import 'package:bizops360_mobile/data/models/task_mappers.dart';
-import 'package:bizops360_mobile/domain/entities/booking.dart';
 import 'package:bizops360_mobile/domain/entities/customer.dart';
 import 'package:bizops360_mobile/domain/entities/leave_request.dart';
 import 'package:bizops360_mobile/domain/entities/task_item.dart';
@@ -57,25 +55,6 @@ void main() {
         customerFromJson(const {'id': 1, 'name': 'ACME'}).stage,
         PipelineStage.converted,
       );
-    });
-  });
-
-  group('bookingFromJson', () {
-    test('folds product type and status into the app model', () {
-      final b = bookingFromJson(const {
-        'id': 1,
-        'type': 'umrah',
-        'status': 'confirmed',
-        'sell_amount': '90000.00',
-        'depart_on': '2026-10-01',
-        'pnr': 'BQ7K2P',
-        'customer': {'name': 'Rahim'},
-      });
-      expect(b.kind, BookingKind.package);
-      expect(b.status, BookingStatus.held);
-      expect(b.reference, 'BQ7K2P');
-      expect(b.amount, 90000);
-      expect(b.travellerName, 'Rahim');
     });
   });
 

@@ -14,7 +14,7 @@ class Can extends StatelessWidget {
     String permission, {
     required this.child,
     String? feature,
-    this.travelOnly = false,
+    this.industryOnly = false,
     this.fallback = const SizedBox.shrink(),
     super.key,
   }) : _permissions = const [],
@@ -25,7 +25,7 @@ class Can extends StatelessWidget {
   const Can.anyOf(
     List<String> permissions, {
     required this.child,
-    this.travelOnly = false,
+    this.industryOnly = false,
     this.fallback = const SizedBox.shrink(),
     super.key,
   }) : _permissions = permissions,
@@ -36,10 +36,10 @@ class Can extends StatelessWidget {
   final List<String> _permissions;
   final String? _feature;
 
-  /// Also require the tenant's industry to be travel — for nav/actions that a
-  /// non-travel owner would otherwise see purely because the `*` role grant
-  /// includes the travel permissions.
-  final bool travelOnly;
+  /// Also require the tenant's industry to be real estate — for nav/actions
+  /// that a non-real-estate owner would otherwise see purely because the `*`
+  /// role grant includes the real-estate permissions.
+  final bool industryOnly;
 
   final Widget child;
   final Widget fallback;
@@ -48,7 +48,7 @@ class Can extends StatelessWidget {
   Widget build(BuildContext context) {
     final perms = Get.find<PermissionsController>();
     return Obx(() {
-      if (travelOnly && !perms.isTravel) return fallback;
+      if (industryOnly && !perms.isRealEstate) return fallback;
       final allowed = _single != null
           ? perms.allows(_single, feature: _feature)
           : perms.canAny(_permissions);

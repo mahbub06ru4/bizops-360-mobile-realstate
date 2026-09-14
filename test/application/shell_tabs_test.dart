@@ -4,38 +4,45 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('shellTabsFor', () {
-    test('travel manager sees Home · Customers · Visa · Tasks · More', () {
-      const r = PermissionResolver(
-        permissions: {'traveller.view', 'visa_application.view', 'task.view'},
-        roles: {'manager'},
-        industry: 'travel',
-      );
-      expect(shellTabsFor(r), [
-        ShellTabId.home,
-        ShellTabId.customers,
-        ShellTabId.visa,
-        ShellTabId.tasks,
-        ShellTabId.workspace,
-      ]);
-    });
+    test(
+      'real-estate manager sees Home · Customers · Projects · Tasks · More',
+      () {
+        const r = PermissionResolver(
+          permissions: {
+            'customer.view',
+            'real_estate_project.view',
+            'task.view',
+          },
+          roles: {'manager'},
+          industry: 'real_estate',
+        );
+        expect(shellTabsFor(r), [
+          ShellTabId.home,
+          ShellTabId.customers,
+          ShellTabId.projects,
+          ShellTabId.tasks,
+          ShellTabId.workspace,
+        ]);
+      },
+    );
 
-    test('non-travel tenant never gets the Visa tab', () {
+    test('a non-real-estate tenant never gets the Projects tab', () {
       const r = PermissionResolver(
-        permissions: {'customer.view', 'visa_application.view', 'task.view'},
+        permissions: {'customer.view', 'real_estate_project.view', 'task.view'},
         industry: 'consultancy',
       );
-      expect(shellTabsFor(r), isNot(contains(ShellTabId.visa)));
+      expect(shellTabsFor(r), isNot(contains(ShellTabId.projects)));
       expect(shellTabsFor(r), contains(ShellTabId.customers));
     });
 
     test('a disabled feature hides its tab even with the permission', () {
       const r = PermissionResolver(
-        permissions: {'visa_application.view', 'task.view'},
-        enabledFeatures: {'travel_visa'}, // tasks feature off
-        industry: 'travel',
+        permissions: {'real_estate_project.view', 'task.view'},
+        enabledFeatures: {'real_estate_projects'}, // tasks feature off
+        industry: 'real_estate',
       );
       final tabs = shellTabsFor(r);
-      expect(tabs, contains(ShellTabId.visa));
+      expect(tabs, contains(ShellTabId.projects));
       expect(tabs, isNot(contains(ShellTabId.tasks)));
     });
 
