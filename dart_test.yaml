@@ -1,0 +1,6 @@
+# The `integration` tag marks tests that need a running bizops360-api. They are
+# excluded from the default run (and CI); run them with:
+#   flutter test --tags integration
+tags:
+  integration:
+    skip: "needs a running bizops360-api — run with: flutter test --tags integration"
