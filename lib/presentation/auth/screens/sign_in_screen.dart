@@ -138,6 +138,15 @@ class SignInScreen extends GetView<SignInController> {
                         child: Text(Tr.forgotPassword.tr),
                       ),
                     ),
+                    const SizedBox(height: 4),
+                    Obx(
+                      () => OutlinedButton(
+                        onPressed: controller.submitting.value
+                            ? null
+                            : controller.continueAsBuyer,
+                        child: Text(Tr.buyerContinueAsBuyer.tr),
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     _ActivationHint(text: Tr.activationHint.tr),
                   ],

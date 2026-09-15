@@ -8,18 +8,22 @@ import '../../../core/error/failure.dart';
 import '../../../core/localization/translation_keys.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/storage/kv_store.dart';
+import '../../../domain/usecases/auth/continue_as_buyer_usecase.dart';
 import '../../../domain/usecases/auth/sign_in_usecase.dart';
 
 class SignInController extends GetxController {
   SignInController({
     required SignInUseCase signIn,
+    required ContinueAsBuyerUseCase continueAsBuyer,
     required AuthController auth,
     required KvStore store,
   }) : _signIn = signIn,
+       _continueAsBuyer = continueAsBuyer,
        _auth = auth,
        _store = store;
 
   final SignInUseCase _signIn;
+  final ContinueAsBuyerUseCase _continueAsBuyer;
   final AuthController _auth;
   final KvStore _store;
 
@@ -84,6 +88,19 @@ class SignInController extends GetxController {
     } else {
       formError.value = failure.message;
     }
+  }
+
+  /// "Continue as Buyer" — a demo-only entry point into the platform-level
+  /// buyer persona (`docs/HANDOFF.md` Phase 2); no credentials involved.
+  Future<void> continueAsBuyer() async {
+    _clearErrors();
+    submitting.value = true;
+    final result = await _continueAsBuyer();
+    submitting.value = false;
+    result.fold((user) {
+      _auth.setUser(user);
+      unawaited(Get.offAllNamed<void>(Routes.buyerShell));
+    }, _applyFailure);
   }
 
   void _clearErrors() {

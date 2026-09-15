@@ -10,12 +10,15 @@ import 'app_routes.dart';
 class AuthGuard extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    final authed =
-        Get.isRegistered<AuthController>() &&
-        Get.find<AuthController>().isAuthenticated;
+    final registered = Get.isRegistered<AuthController>();
+    final auth = registered ? Get.find<AuthController>() : null;
+    final authed = auth?.isAuthenticated ?? false;
 
     if (route == Routes.signIn) {
-      return authed ? const RouteSettings(name: Routes.shell) : null;
+      if (!authed) return null;
+      return RouteSettings(
+        name: auth!.user!.isBuyer ? Routes.buyerShell : Routes.shell,
+      );
     }
     return authed ? null : const RouteSettings(name: Routes.signIn);
   }

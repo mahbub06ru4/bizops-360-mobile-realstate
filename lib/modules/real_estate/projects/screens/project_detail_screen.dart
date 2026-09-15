@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../application/permissions/permissions_controller.dart';
 import '../../../../core/extensions/money_format.dart';
 import '../../../../core/localization/translation_keys.dart';
 import '../../../../core/permissions/can.dart';
@@ -13,13 +14,17 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/entities/building.dart';
 import '../../../../domain/entities/real_estate_project.dart';
 import '../../../../domain/entities/unit.dart';
+import '../../../../domain/repositories/buyer_repository.dart';
 import '../controllers/project_detail_controller.dart';
 import '../project_display.dart';
 
-/// Shared seller + buyer view of a project. Every viewer sees the same
-/// structure (location, land/units, amenities, pricing, payment plan); only
-/// the seller-only actions (submit for verification) are gated with `Can`, so
-/// this same screen is reusable for a future buyer-facing detail route.
+/// Shared seller/staff + buyer view of a project. Every viewer sees the same
+/// structure (location, land/units, amenities, pricing, payment plan). The
+/// seller-only action (submit for verification) is gated with `Can`, which a
+/// buyer session naturally fails (no permissions at all); the buyer-only
+/// actions (Save / Add to compare) are gated on `PermissionsController.
+/// isBuyer` the same way — so this one screen serves both personas per
+/// `docs/HANDOFF.md` Phase 2, rather than a parallel buyer detail screen.
 class ProjectDetailScreen extends GetView<ProjectDetailController> {
   const ProjectDetailScreen({super.key});
 
@@ -42,7 +47,11 @@ class ProjectDetailScreen extends GetView<ProjectDetailController> {
       ),
       bottomNavigationBar: Obx(() {
         final p = controller.state.value.valueOrNull;
-        if (p == null || !p.canSubmit) return const SizedBox.shrink();
+        if (p == null) return const SizedBox.shrink();
+        if (Get.find<PermissionsController>().isBuyer) {
+          return _BuyerActionBar(project: p);
+        }
+        if (!p.canSubmit) return const SizedBox.shrink();
         return Can(
           Perm.projectSubmit,
           child: SafeArea(
@@ -351,6 +360,73 @@ class _UnitRow extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// The buyer-only footer on the shared detail screen: Save/Unsave (only when
+/// a `BuyerRepository` is actually wired — it always is once a buyer session
+/// has reached this screen via Browse/Saved).
+class _BuyerActionBar extends StatefulWidget {
+  const _BuyerActionBar({required this.project});
+
+  final RealEstateProject project;
+
+  @override
+  State<_BuyerActionBar> createState() => _BuyerActionBarState();
+}
+
+class _BuyerActionBarState extends State<_BuyerActionBar> {
+  bool _saved = false;
+  bool _loading = true;
+
+  BuyerRepository? get _repo =>
+      Get.isRegistered<BuyerRepository>() ? Get.find<BuyerRepository>() : null;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final repo = _repo;
+    if (repo == null) {
+      setState(() => _loading = false);
+      return;
+    }
+    final ids = await repo.savedProjectIds();
+    if (!mounted) return;
+    setState(() {
+      _saved = (ids.valueOrNull ?? const []).contains(widget.project.id);
+      _loading = false;
+    });
+  }
+
+  Future<void> _toggleSave() async {
+    final repo = _repo;
+    if (repo == null) return;
+    if (_saved) {
+      await repo.unsaveProject(widget.project.id);
+    } else {
+      await repo.saveProject(widget.project.id);
+      AppSnackbar.show(Tr.buyerSaved.tr, tone: FeedbackTone.success);
+    }
+    if (!mounted) return;
+    setState(() => _saved = !_saved);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) return const SizedBox.shrink();
+    return SafeArea(
+      minimum: EdgeInsets.all(AppSpacing.lg),
+      child: AppButton(
+        label: _saved ? Tr.buyerUnsave.tr : Tr.buyerSave.tr,
+        icon: _saved ? Icons.bookmark : Icons.bookmark_outline,
+        variant: _saved ? AppButtonVariant.secondary : AppButtonVariant.primary,
+        onPressed: _toggleSave,
       ),
     );
   }

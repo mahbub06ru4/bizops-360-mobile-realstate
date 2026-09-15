@@ -2,6 +2,15 @@ import 'package:equatable/equatable.dart';
 
 import 'tenant.dart';
 
+/// The two personas one login can resolve to (see `docs/HANDOFF.md` Phase 2).
+/// [staff] is the existing tenant-scoped persona (owner/admin/manager/staff
+/// roles, `tenant` set, drives the whole vertical module). [buyer] is a new
+/// platform-level persona: no tenant, no industry, no roles/permissions —
+/// just a buyer account browsing verified listings across the (single, for
+/// Phase 2) demo tenant's catalogue. There is no backend buyer-auth yet, so
+/// only [FakeAuthRepository] can produce a [buyer] session today.
+enum UserKind { staff, buyer }
+
 /// The signed-in user, as returned by `auth/login` and `auth/me`. Roles and
 /// permissions here are already scoped to [tenant] by the backend, so the app
 /// can drive its whole navigation and gating from this one object.
@@ -13,14 +22,23 @@ class AuthUser extends Equatable {
     required this.roles,
     required this.permissions,
     this.tenant,
+    this.kind = UserKind.staff,
+    this.phone,
   });
 
   final int id;
   final String name;
   final String email;
+  final String? phone;
   final List<String> roles;
   final List<String> permissions;
   final Tenant? tenant;
+
+  /// [UserKind.staff] unless this session was started via "Continue as
+  /// Buyer" on the sign-in screen.
+  final UserKind kind;
+
+  bool get isBuyer => kind == UserKind.buyer;
 
   static const _elevatedRoles = {'owner', 'admin', 'manager'};
 
@@ -47,5 +65,14 @@ class AuthUser extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, email, roles, permissions, tenant];
+  List<Object?> get props => [
+    id,
+    name,
+    email,
+    phone,
+    roles,
+    permissions,
+    tenant,
+    kind,
+  ];
 }

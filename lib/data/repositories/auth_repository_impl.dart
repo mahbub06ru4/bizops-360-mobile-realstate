@@ -56,6 +56,15 @@ class AuthRepositoryImpl implements AuthRepository {
     return token != null && token.isNotEmpty;
   }
 
+  @override
+  Future<Result<AuthUser>> continueAsBuyer() async {
+    // No backend buyer-auth endpoint exists yet (see AuthRepository doc
+    // comment) — surface a clear failure rather than pretending to succeed.
+    return const Result.err(
+      ServerFailure('Buyer accounts are not available yet.'),
+    );
+  }
+
   Future<Result<T>> _guard<T>(Future<T> Function() run) async {
     try {
       return Result.ok(await run());

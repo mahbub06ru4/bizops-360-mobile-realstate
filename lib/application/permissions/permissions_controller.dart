@@ -18,6 +18,7 @@ class PermissionsController extends GetxController {
       permissions: user.permissions.toSet(),
       roles: user.roles.toSet(),
       industry: user.tenant?.industry,
+      isBuyer: user.isBuyer,
     );
   }
 
@@ -30,4 +31,9 @@ class PermissionsController extends GetxController {
   /// dashboard sections gate on this, not just on a permission the owner role
   /// happens to hold in every industry.
   bool get isRealEstate => resolver.isRealEstate;
+
+  /// The signed-in session is the platform-level buyer persona — routes to
+  /// the buyer shell instead of the staff shell, and to a much smaller set of
+  /// screens. See `docs/HANDOFF.md` Phase 2.
+  bool get isBuyer => resolver.isBuyer;
 }

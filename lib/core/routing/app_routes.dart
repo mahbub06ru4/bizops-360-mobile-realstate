@@ -3,6 +3,17 @@ abstract final class Routes {
   static const signIn = '/sign-in';
   static const shell = '/shell';
 
+  // Buyer persona (Phase 2 — platform-level, no tenant/roles). Browse/Saved/
+  // My Properties/Profile are also embedded as widgets inside the buyer
+  // shell's `IndexedStack` (mirroring how the staff shell embeds Projects
+  // etc.) — these routes exist for deep-linking straight to one tab.
+  static const buyerShell = '/buyer/shell';
+  static const buyerBrowse = '/buyer/browse';
+  static const buyerSaved = '/buyer/saved';
+  static const buyerCompare = '/buyer/compare';
+  static const buyerMyProperties = '/buyer/my-properties';
+  static const buyerProfile = '/buyer/profile';
+
   static const notifications = '/notifications';
   static const taskDetail = '/task';
   static const attendance = '/attendance';

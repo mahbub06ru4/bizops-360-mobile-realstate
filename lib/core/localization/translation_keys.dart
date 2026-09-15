@@ -297,6 +297,40 @@ abstract final class Tr {
   static const ppCreated = 'pp.created';
   static const ppIncomplete = 'pp.incomplete';
 
+  // Real estate — buyer persona (Phase 2)
+  static const buyerContinueAsBuyer = 'buyer.continue_as_buyer';
+  static const buyerNavBrowse = 'buyer.nav_browse';
+  static const buyerNavSaved = 'buyer.nav_saved';
+  static const buyerNavMyProperties = 'buyer.nav_my_properties';
+  static const buyerNavProfile = 'buyer.nav_profile';
+  static const buyerBrowseTitle = 'buyer.browse_title';
+  static const buyerSearchHint = 'buyer.search_hint';
+  static const buyerBrowseEmpty = 'buyer.browse_empty';
+  static const buyerNoResults = 'buyer.no_results';
+  static const buyerSave = 'buyer.save';
+  static const buyerSaved = 'buyer.saved';
+  static const buyerUnsave = 'buyer.unsave';
+  static const buyerSavedTitle = 'buyer.saved_title';
+  static const buyerSavedEmpty = 'buyer.saved_empty';
+  static const buyerCompare = 'buyer.compare';
+  static const buyerCompareTitle = 'buyer.compare_title';
+  static const buyerCompareMax = 'buyer.compare_max';
+  static const buyerCompareMinTwo = 'buyer.compare_min_two';
+  static const buyerCompareNow = 'buyer.compare_now';
+  static const buyerComparePrice = 'buyer.compare_price';
+  static const buyerCompareLocation = 'buyer.compare_location';
+  static const buyerCompareUnitTypes = 'buyer.compare_unit_types';
+  static const buyerCompareAmenities = 'buyer.compare_amenities';
+  static const buyerCompareVerification = 'buyer.compare_verification';
+  static const buyerMyPropertiesTitle = 'buyer.my_properties_title';
+  static const buyerMyPropertiesEmpty = 'buyer.my_properties_empty';
+  static const buyerPaid = 'buyer.paid';
+  static const buyerRemaining = 'buyer.remaining';
+  static const buyerNextDue = 'buyer.next_due';
+  static const buyerInstallmentTimeline = 'buyer.installment_timeline';
+  static const buyerProfileTitle = 'buyer.profile_title';
+  static const buyerSignOut = 'buyer.sign_out';
+
   // Expenses
   static const expensesTitle = 'exp.title';
   static const expenseNew = 'exp.new';

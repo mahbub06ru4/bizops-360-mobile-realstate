@@ -20,4 +20,13 @@ abstract interface class AuthRepository {
 
   /// Whether a token is stored on this device (does not prove it is still valid).
   Future<bool> hasStoredSession();
+
+  /// Demo-only entry point for the platform-level buyer persona (`docs/
+  /// HANDOFF.md` Phase 2) — "Continue as Buyer" on the sign-in screen. No
+  /// backend buyer-auth endpoint exists yet, so [AuthRepositoryImpl] returns a
+  /// failure until one lands (assumed shape: `POST /auth/buyer/demo-login` ->
+  /// the same `{data:{…user}, token}` envelope as `auth/login`, with the user
+  /// object carrying no `tenant`/`roles`); only [FakeAuthRepository]
+  /// fabricates a session today.
+  Future<Result<AuthUser>> continueAsBuyer();
 }

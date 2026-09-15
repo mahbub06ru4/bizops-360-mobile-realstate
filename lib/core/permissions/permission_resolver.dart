@@ -9,6 +9,7 @@ class PermissionResolver extends Equatable {
     this.roles = const {},
     this.enabledFeatures = const {},
     this.industry,
+    this.isBuyer = false,
   });
 
   const PermissionResolver.empty() : this();
@@ -22,6 +23,11 @@ class PermissionResolver extends Equatable {
 
   /// `travel` | `real_estate` | `consultancy` | null.
   final String? industry;
+
+  /// True for the platform-level buyer persona (`AuthUser.isBuyer`) — no
+  /// tenant, no roles/permissions, routed to the buyer shell instead of the
+  /// staff shell. See `docs/HANDOFF.md` Phase 2.
+  final bool isBuyer;
 
   bool get isRealEstate => industry == 'real_estate';
 
@@ -46,5 +52,11 @@ class PermissionResolver extends Equatable {
       can(permission) && (feature == null || featureEnabled(feature));
 
   @override
-  List<Object?> get props => [permissions, roles, enabledFeatures, industry];
+  List<Object?> get props => [
+    permissions,
+    roles,
+    enabledFeatures,
+    industry,
+    isBuyer,
+  ];
 }

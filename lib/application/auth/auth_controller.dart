@@ -33,7 +33,7 @@ class AuthController extends GetxController {
     final result = await _loadSession();
     return result.fold((u) {
       _bind(u);
-      return Routes.shell;
+      return u.isBuyer ? Routes.buyerShell : Routes.shell;
     }, (_) => Routes.signIn);
   }
 

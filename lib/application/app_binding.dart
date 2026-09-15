@@ -13,6 +13,7 @@ import '../data/repositories/fake_auth_repository.dart';
 import '../data/repositories/fake_device_repository.dart';
 import '../domain/repositories/auth_repository.dart';
 import '../domain/repositories/device_repository.dart';
+import '../domain/usecases/auth/continue_as_buyer_usecase.dart';
 import '../domain/usecases/auth/load_session_usecase.dart';
 import '../domain/usecases/auth/sign_in_usecase.dart';
 import '../domain/usecases/auth/sign_out_usecase.dart';
@@ -42,6 +43,10 @@ class AppBinding extends Bindings {
       permanent: true,
     );
     Get.put<SignOutUseCase>(SignOutUseCase(Get.find()), permanent: true);
+    Get.put<ContinueAsBuyerUseCase>(
+      ContinueAsBuyerUseCase(Get.find()),
+      permanent: true,
+    );
 
     Get.put<AuthController>(
       AuthController(loadSession: Get.find(), signOut: Get.find()),

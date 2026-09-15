@@ -9,6 +9,7 @@ import '../../domain/repositories/auth_repository.dart';
 /// error path stays exercisable. Shaped to match the real `auth/*` envelope.
 class FakeAuthRepository implements AuthRepository {
   bool _signedIn = false;
+  bool _asBuyer = false;
 
   static const _demoUser = AuthUser(
     id: 1,
@@ -61,22 +62,41 @@ class FakeAuthRepository implements AuthRepository {
       );
     }
     _signedIn = true;
+    _asBuyer = false;
     return _delayed(Result.ok(_demoUser.copyWithEmail(email)));
   }
 
   @override
   Future<Result<AuthUser>> currentUser() async {
     if (!_signedIn) return const Result.err(UnauthorizedFailure());
-    return _delayed(const Result.ok(_demoUser));
+    return _delayed(Result.ok(_asBuyer ? _demoBuyer : _demoUser));
   }
 
   @override
   Future<void> signOut() async {
     _signedIn = false;
+    _asBuyer = false;
   }
 
   @override
   Future<bool> hasStoredSession() async => _signedIn;
+
+  static const _demoBuyer = AuthUser(
+    id: 9001,
+    name: 'Tanvir Ahmed',
+    email: 'buyer.demo@bizops360.test',
+    phone: '+8801912345678',
+    roles: [],
+    permissions: [],
+    kind: UserKind.buyer,
+  );
+
+  @override
+  Future<Result<AuthUser>> continueAsBuyer() async {
+    _signedIn = true;
+    _asBuyer = true;
+    return _delayed(const Result.ok(_demoBuyer));
+  }
 }
 
 extension _CopyEmail on AuthUser {

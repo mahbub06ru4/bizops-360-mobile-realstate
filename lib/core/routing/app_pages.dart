@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
 
+import '../../modules/real_estate/buyer/browse/screens/browse_screen.dart';
+import '../../modules/real_estate/buyer/buyer_bindings.dart';
+import '../../modules/real_estate/buyer/compare/screens/compare_screen.dart';
+import '../../modules/real_estate/buyer/my_properties/screens/my_properties_screen.dart';
+import '../../modules/real_estate/buyer/profile/screens/buyer_profile_screen.dart';
+import '../../modules/real_estate/buyer/saved/screens/saved_screen.dart';
+import '../../modules/real_estate/buyer/shell/buyer_shell_screen.dart';
 import '../../modules/real_estate/offers/bindings/offers_binding.dart';
 import '../../modules/real_estate/offers/screens/new_offer_screen.dart';
 import '../../modules/real_estate/offers/screens/offer_thread_screen.dart';
@@ -81,6 +88,36 @@ abstract final class AppPages {
       middlewares: [AuthGuard()],
     ),
     _guarded(Routes.shell, () => const ShellScreen(), binding: ShellBinding()),
+    _guarded(
+      Routes.buyerShell,
+      () => const BuyerShellScreen(),
+      binding: BuyerShellBinding(),
+    ),
+    _guarded(
+      Routes.buyerBrowse,
+      () => const BrowseScreen(),
+      binding: BrowseBinding(),
+    ),
+    _guarded(
+      Routes.buyerSaved,
+      () => const SavedScreen(),
+      binding: SavedBinding(),
+    ),
+    _guarded(
+      Routes.buyerCompare,
+      () => const CompareScreen(),
+      binding: CompareBinding(),
+    ),
+    _guarded(
+      Routes.buyerMyProperties,
+      () => const MyPropertiesScreen(),
+      binding: MyPropertiesBinding(),
+    ),
+    _guarded(
+      Routes.buyerProfile,
+      () => const BuyerProfileScreen(),
+      binding: BuyerProfileBinding(),
+    ),
     _guarded(
       Routes.notifications,
       () => const NotificationsScreen(),

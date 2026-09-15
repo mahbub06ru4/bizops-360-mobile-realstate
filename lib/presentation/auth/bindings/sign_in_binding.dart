@@ -8,6 +8,7 @@ class SignInBinding extends Bindings {
     Get.lazyPut<SignInController>(
       () => SignInController(
         signIn: Get.find(),
+        continueAsBuyer: Get.find(),
         auth: Get.find(),
         store: Get.find(),
       ),
