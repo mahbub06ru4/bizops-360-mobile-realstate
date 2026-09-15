@@ -6,18 +6,20 @@ import '../../core/network/api_envelope.dart';
 /// convention every other data source in this app uses.
 ///
 /// Endpoint shapes match `app/Modules/Industry/RealEstate/Routes/api.php` in
-/// `bizops360-api` exactly:
-///   GET/POST   /projects
-///   GET/PUT    /projects/{id}
-///   POST       /projects/{id}/submit
-///   POST       /projects/{id}/buildings
-///   POST       /buildings/{buildingId}/units        (not nested under project)
-///   POST       /projects/{id}/location               (singular)
-///   POST       /projects/{id}/amenities
-///   POST       /projects/{id}/pricing                (POST, not PUT)
-///   POST       /projects/{id}/payment-plans
-///   POST       /units/{unitId}/media                 (not nested under project)
-///   POST       /units/{unitId}/prices
+/// `bizops360-api` exactly — the whole module is namespaced under
+/// `/real-estate` (moved there to stop colliding with Operations' own
+/// `/projects` resource):
+///   GET/POST   /real-estate/projects
+///   GET/PUT    /real-estate/projects/{id}
+///   POST       /real-estate/projects/{id}/submit
+///   POST       /real-estate/projects/{id}/buildings
+///   POST       /real-estate/buildings/{buildingId}/units   (not nested under project)
+///   POST       /real-estate/projects/{id}/location          (singular)
+///   POST       /real-estate/projects/{id}/amenities
+///   POST       /real-estate/projects/{id}/pricing           (POST, not PUT)
+///   POST       /real-estate/projects/{id}/payment-plans
+///   POST       /real-estate/units/{unitId}/media            (not nested under project)
+///   POST       /real-estate/units/{unitId}/prices
 class RealEstateRemoteDataSource {
   RealEstateRemoteDataSource(this._client);
 
@@ -25,20 +27,22 @@ class RealEstateRemoteDataSource {
 
   Future<List<Map<String, dynamic>>> list() async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/projects',
+      '/real-estate/projects',
       query: {'per_page': 100},
     );
     return envelopeList(res.data);
   }
 
   Future<Map<String, dynamic>> byId(String id) async {
-    final res = await _client.get<Map<String, dynamic>>('/projects/$id');
+    final res = await _client.get<Map<String, dynamic>>(
+      '/real-estate/projects/$id',
+    );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> create(Map<String, dynamic> body) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects',
+      '/real-estate/projects',
       body: body,
     );
     return envelopeObject(res.data);
@@ -49,7 +53,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.put<Map<String, dynamic>>(
-      '/projects/$id',
+      '/real-estate/projects/$id',
       body: body,
     );
     return envelopeObject(res.data);
@@ -57,7 +61,7 @@ class RealEstateRemoteDataSource {
 
   Future<Map<String, dynamic>> submit(String id) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$id/submit',
+      '/real-estate/projects/$id/submit',
     );
     return envelopeObject(res.data);
   }
@@ -67,7 +71,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$projectId/buildings',
+      '/real-estate/projects/$projectId/buildings',
       body: body,
     );
     return envelopeObject(res.data);
@@ -79,7 +83,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/buildings/$buildingId/units',
+      '/real-estate/buildings/$buildingId/units',
       body: body,
     );
     return envelopeObject(res.data);
@@ -90,7 +94,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$projectId/location',
+      '/real-estate/projects/$projectId/location',
       body: body,
     );
     return envelopeObject(res.data);
@@ -101,7 +105,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$projectId/amenities',
+      '/real-estate/projects/$projectId/amenities',
       body: body,
     );
     return envelopeObject(res.data);
@@ -112,7 +116,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$projectId/pricing',
+      '/real-estate/projects/$projectId/pricing',
       body: body,
     );
     return envelopeObject(res.data);
@@ -123,7 +127,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/projects/$projectId/payment-plans',
+      '/real-estate/projects/$projectId/payment-plans',
       body: body,
     );
     return envelopeObject(res.data);
@@ -139,7 +143,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/units/$unitId/media',
+      '/real-estate/units/$unitId/media',
       body: body,
     );
     return envelopeObject(res.data);
@@ -150,7 +154,7 @@ class RealEstateRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/units/$unitId/prices',
+      '/real-estate/units/$unitId/prices',
       body: body,
     );
     return envelopeObject(res.data);

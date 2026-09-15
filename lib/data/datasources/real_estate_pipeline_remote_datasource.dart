@@ -6,29 +6,29 @@ import '../../core/network/api_envelope.dart';
 /// envelope-returning convention as [RealEstateRemoteDataSource]. Exactly
 /// matches `app/Modules/Industry/RealEstate/Routes/api.php` /
 /// `.../Http/Controllers/Api/V1/*Controller.php` in `bizops360-api`:
-///   GET/POST   /leads/{lead}/requirements
-///   GET        /requirements/{id}                (embeds `matches`)
-///   POST       /requirements/{id}/match
-///   GET        /site-visits                       (tenant-wide)
-///   GET/POST   /leads/{lead}/site-visits
-///   GET        /site-visits/{id}
-///   POST       /site-visits/{id}/complete
-///   POST       /site-visits/{id}/cancel
-///   GET        /offers                             (tenant-wide)
-///   GET/POST   /leads/{lead}/offers
-///   GET        /offers/{id}                        (embeds `counter_offers`)
-///   POST       /offers/{id}/counter
-///   POST       /offers/{id}/accept
-///   POST       /offers/{id}/reject
-///   POST       /offers/{id}/reserve                (creates the booking)
-///   GET        /real-estate-bookings               (tenant-wide)
-///   GET        /real-estate-bookings/{id}          (embeds `installment_plan`)
-///   POST       /real-estate-bookings/{id}/confirm
-///   POST       /real-estate-bookings/{id}/cancel
-///   POST       /real-estate-bookings/{id}/installment-plan
-///   GET        /installment-plans/{id}             (embeds `installments`)
-///   POST       /installments/{id}/generate-invoice
-///   POST       /installments/{id}/mark-paid
+///   GET/POST   /real-estate/leads/{lead}/requirements
+///   GET        /real-estate/requirements/{id}                (embeds `matches`)
+///   POST       /real-estate/requirements/{id}/match
+///   GET        /real-estate/site-visits                       (tenant-wide)
+///   GET/POST   /real-estate/leads/{lead}/site-visits
+///   GET        /real-estate/site-visits/{id}
+///   POST       /real-estate/site-visits/{id}/complete
+///   POST       /real-estate/site-visits/{id}/cancel
+///   GET        /real-estate/offers                             (tenant-wide)
+///   GET/POST   /real-estate/leads/{lead}/offers
+///   GET        /real-estate/offers/{id}                        (embeds `counter_offers`)
+///   POST       /real-estate/offers/{id}/counter
+///   POST       /real-estate/offers/{id}/accept
+///   POST       /real-estate/offers/{id}/reject
+///   POST       /real-estate/offers/{id}/reserve                (creates the booking)
+///   GET        /real-estate/real-estate-bookings               (tenant-wide)
+///   GET        /real-estate/real-estate-bookings/{id}          (embeds `installment_plan`)
+///   POST       /real-estate/real-estate-bookings/{id}/confirm
+///   POST       /real-estate/real-estate-bookings/{id}/cancel
+///   POST       /real-estate/real-estate-bookings/{id}/installment-plan
+///   GET        /real-estate/installment-plans/{id}             (embeds `installments`)
+///   POST       /real-estate/installments/{id}/generate-invoice
+///   POST       /real-estate/installments/{id}/mark-paid
 ///
 /// There is no `/requirements/{id}/matches`, `/offers/{id}/history`,
 /// `/real-estate-bookings/{id}/installment-plan` (GET), or
@@ -44,7 +44,7 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<List<Map<String, dynamic>>> requirementsForLead(String leadId) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/leads/$leadId/requirements',
+      '/real-estate/leads/$leadId/requirements',
     );
     return envelopeList(res.data);
   }
@@ -54,7 +54,7 @@ class RealEstatePipelineRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/leads/$leadId/requirements',
+      '/real-estate/leads/$leadId/requirements',
       body: body,
     );
     return envelopeObject(res.data);
@@ -63,13 +63,15 @@ class RealEstatePipelineRemoteDataSource {
   /// `GET /requirements/{id}` — embeds `lead` and `matches` (each with its
   /// own `unit`).
   Future<Map<String, dynamic>> requirementById(String id) async {
-    final res = await _client.get<Map<String, dynamic>>('/requirements/$id');
+    final res = await _client.get<Map<String, dynamic>>(
+      '/real-estate/requirements/$id',
+    );
     return envelopeObject(res.data);
   }
 
   Future<List<Map<String, dynamic>>> matchRequirement(String id) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/requirements/$id/match',
+      '/real-estate/requirements/$id/match',
     );
     return envelopeList(res.data);
   }
@@ -91,7 +93,7 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<List<Map<String, dynamic>>> siteVisits({String? status}) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/site-visits',
+      '/real-estate/site-visits',
       query: {'per_page': 100, 'status': ?status},
     );
     return envelopeList(res.data);
@@ -99,7 +101,7 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<List<Map<String, dynamic>>> siteVisitsForLead(String leadId) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/leads/$leadId/site-visits',
+      '/real-estate/leads/$leadId/site-visits',
     );
     return envelopeList(res.data);
   }
@@ -109,14 +111,16 @@ class RealEstatePipelineRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/leads/$leadId/site-visits',
+      '/real-estate/leads/$leadId/site-visits',
       body: body,
     );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> siteVisitById(String id) async {
-    final res = await _client.get<Map<String, dynamic>>('/site-visits/$id');
+    final res = await _client.get<Map<String, dynamic>>(
+      '/real-estate/site-visits/$id',
+    );
     return envelopeObject(res.data);
   }
 
@@ -125,7 +129,7 @@ class RealEstatePipelineRemoteDataSource {
     String? feedback,
   }) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/site-visits/$id/complete',
+      '/real-estate/site-visits/$id/complete',
       body: {'feedback': ?feedback},
     );
     return envelopeObject(res.data);
@@ -133,7 +137,7 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<Map<String, dynamic>> cancelSiteVisit(String id) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/site-visits/$id/cancel',
+      '/real-estate/site-visits/$id/cancel',
     );
     return envelopeObject(res.data);
   }
@@ -144,7 +148,7 @@ class RealEstatePipelineRemoteDataSource {
     bool latestPerThread = true,
   }) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/offers',
+      '/real-estate/offers',
       query: {'per_page': 100, 'latest_per_thread': latestPerThread},
     );
     return envelopeList(res.data);
@@ -153,7 +157,9 @@ class RealEstatePipelineRemoteDataSource {
   /// `GET /offers/{id}` — embeds `lead`, `unit` and (only here) this offer's
   /// own direct `counter_offers`.
   Future<Map<String, dynamic>> offerById(String id) async {
-    final res = await _client.get<Map<String, dynamic>>('/offers/$id');
+    final res = await _client.get<Map<String, dynamic>>(
+      '/real-estate/offers/$id',
+    );
     return envelopeObject(res.data);
   }
 
@@ -162,7 +168,7 @@ class RealEstatePipelineRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/leads/$leadId/offers',
+      '/real-estate/leads/$leadId/offers',
       body: body,
     );
     return envelopeObject(res.data);
@@ -173,7 +179,7 @@ class RealEstatePipelineRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/offers/$offerId/counter',
+      '/real-estate/offers/$offerId/counter',
       body: body,
     );
     return envelopeObject(res.data);
@@ -181,14 +187,14 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<Map<String, dynamic>> acceptOffer(String offerId) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/offers/$offerId/accept',
+      '/real-estate/offers/$offerId/accept',
     );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> rejectOffer(String offerId) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/offers/$offerId/reject',
+      '/real-estate/offers/$offerId/reject',
     );
     return envelopeObject(res.data);
   }
@@ -197,7 +203,7 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<List<Map<String, dynamic>>> bookings({String? status}) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/real-estate-bookings',
+      '/real-estate/real-estate-bookings',
       query: {'per_page': 100, 'status': ?status},
     );
     return envelopeList(res.data);
@@ -207,7 +213,7 @@ class RealEstatePipelineRemoteDataSource {
   /// here) `installment_plan` (with its own `installments`).
   Future<Map<String, dynamic>> booking(String id) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/real-estate-bookings/$id',
+      '/real-estate/real-estate-bookings/$id',
     );
     return envelopeObject(res.data);
   }
@@ -217,21 +223,21 @@ class RealEstatePipelineRemoteDataSource {
   /// endpoint. No request body.
   Future<Map<String, dynamic>> reserveBooking(String offerId) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/offers/$offerId/reserve',
+      '/real-estate/offers/$offerId/reserve',
     );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> confirmBooking(String id) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/real-estate-bookings/$id/confirm',
+      '/real-estate/real-estate-bookings/$id/confirm',
     );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> cancelBooking(String id) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/real-estate-bookings/$id/cancel',
+      '/real-estate/real-estate-bookings/$id/cancel',
     );
     return envelopeObject(res.data);
   }
@@ -249,7 +255,7 @@ class RealEstatePipelineRemoteDataSource {
   /// through the booking.
   Future<Map<String, dynamic>> installmentPlanById(String planId) async {
     final res = await _client.get<Map<String, dynamic>>(
-      '/installment-plans/$planId',
+      '/real-estate/installment-plans/$planId',
     );
     return envelopeObject(res.data);
   }
@@ -259,7 +265,7 @@ class RealEstatePipelineRemoteDataSource {
     Map<String, dynamic> body,
   ) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/real-estate-bookings/$bookingId/installment-plan',
+      '/real-estate/real-estate-bookings/$bookingId/installment-plan',
       body: body,
     );
     return envelopeObject(res.data);
@@ -280,14 +286,14 @@ class RealEstatePipelineRemoteDataSource {
 
   Future<Map<String, dynamic>> generateInvoice(String installmentId) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/installments/$installmentId/generate-invoice',
+      '/real-estate/installments/$installmentId/generate-invoice',
     );
     return envelopeObject(res.data);
   }
 
   Future<Map<String, dynamic>> markInstallmentPaid(String installmentId) async {
     final res = await _client.post<Map<String, dynamic>>(
-      '/installments/$installmentId/mark-paid',
+      '/real-estate/installments/$installmentId/mark-paid',
     );
     return envelopeObject(res.data);
   }
