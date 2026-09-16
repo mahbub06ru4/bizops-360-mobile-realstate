@@ -12,6 +12,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../domain/entities/follow_up.dart';
 import '../../../domain/entities/task_item.dart';
 import '../../../modules/real_estate/dashboard/my_projects_section.dart';
+import '../../../modules/real_estate/dashboard/sales_overview_section.dart';
 import '../../crm/controllers/follow_ups_controller.dart';
 import '../../notifications/controllers/notifications_controller.dart';
 import '../../tasks/controllers/tasks_controller.dart';
@@ -101,6 +102,12 @@ class HomeScreen extends StatelessWidget {
               feature: Feature.realEstateProjects,
               industryOnly: true,
               child: MyProjectsSection(),
+            ),
+            const Can(
+              Perm.projectView,
+              feature: Feature.realEstateProjects,
+              industryOnly: true,
+              child: SalesOverviewSection(),
             ),
             const Can(
               Perm.followUpManage,

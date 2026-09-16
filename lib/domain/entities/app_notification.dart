@@ -9,6 +9,19 @@ enum NotificationKind {
   visaDeadline,
   documentExpiry,
   general,
+
+  // Real-estate triggers (roadmap §7 Phase 3 — "full notification wiring").
+  /// A new verified property matches a buyer's saved requirement.
+  propertyMatch,
+
+  /// An offer was countered, accepted or rejected.
+  offerUpdate,
+
+  /// A scheduled site visit is coming up (e.g. tomorrow).
+  siteVisitReminder,
+
+  /// An installment is due soon or overdue.
+  installmentDue,
 }
 
 /// One row in the notifications list (`GET /api/v1/notifications`).

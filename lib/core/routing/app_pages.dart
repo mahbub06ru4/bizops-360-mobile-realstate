@@ -23,7 +23,11 @@ import '../../modules/real_estate/requirements/screens/matches_screen.dart';
 import '../../modules/real_estate/requirements/screens/requirement_form_screen.dart';
 import '../../modules/real_estate/site_visits/bindings/site_visits_binding.dart';
 import '../../modules/real_estate/site_visits/screens/site_visits_screen.dart';
+import '../../presentation/auth/bindings/plan_selection_binding.dart';
+import '../../presentation/auth/bindings/register_binding.dart';
 import '../../presentation/auth/bindings/sign_in_binding.dart';
+import '../../presentation/auth/screens/plan_selection_screen.dart';
+import '../../presentation/auth/screens/register_screen.dart';
 import '../../presentation/auth/screens/sign_in_screen.dart';
 import '../../presentation/common/coming_soon_screen.dart';
 import '../../presentation/crm/bindings/crm_bindings.dart';
@@ -86,6 +90,19 @@ abstract final class AppPages {
       page: () => const SignInScreen(),
       binding: SignInBinding(),
       middlewares: [AuthGuard()],
+    ),
+    // No AuthGuard — reachable by a signed-out visitor from the sign-in
+    // screen's "Create your business" link (roadmap §7 Phase 3 self-serve
+    // onboarding).
+    GetPage(
+      name: Routes.register,
+      page: () => const RegisterScreen(),
+      binding: RegisterBinding(),
+    ),
+    _guarded(
+      Routes.planSelection,
+      () => const PlanSelectionScreen(),
+      binding: PlanSelectionBinding(),
     ),
     _guarded(Routes.shell, () => const ShellScreen(), binding: ShellBinding()),
     _guarded(

@@ -1,6 +1,8 @@
 abstract final class Routes {
   static const splash = '/splash';
   static const signIn = '/sign-in';
+  static const register = '/register';
+  static const planSelection = '/plan-selection';
   static const shell = '/shell';
 
   // Buyer persona (Phase 2 — platform-level, no tenant/roles). Browse/Saved/

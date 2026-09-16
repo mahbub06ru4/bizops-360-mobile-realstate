@@ -99,6 +99,16 @@ class _ProjectCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (project.developerName != null) ...[
+              SizedBox(height: AppSpacing.xxs),
+              Text(
+                project.developerName!,
+                style: text.bodySmall?.copyWith(
+                  color: c.brand,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
             if (project.location != null) ...[
               SizedBox(height: AppSpacing.xxs),
               Text(project.location!.shortLabel, style: text.bodySmall),

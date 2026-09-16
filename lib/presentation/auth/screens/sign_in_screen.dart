@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../application/settings/settings_controller.dart';
 import '../../../core/localization/translation_keys.dart';
+import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_logo.dart';
 import '../controllers/sign_in_controller.dart';
@@ -145,6 +146,12 @@ class SignInScreen extends GetView<SignInController> {
                             ? null
                             : controller.continueAsBuyer,
                         child: Text(Tr.buyerContinueAsBuyer.tr),
+                      ),
+                    ),
+                    Align(
+                      child: TextButton(
+                        onPressed: () => Get.toNamed<void>(Routes.register),
+                        child: Text(Tr.registerCta.tr),
                       ),
                     ),
                     const SizedBox(height: 12),

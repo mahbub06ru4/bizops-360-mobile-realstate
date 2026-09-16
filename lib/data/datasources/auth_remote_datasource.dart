@@ -31,6 +31,34 @@ class AuthRemoteDataSource {
     );
   }
 
+  /// `POST auth/register` → `{ data: {...user}, token: "..." }`. Same
+  /// envelope shape as [login]; `industry` is nullable server-side.
+  Future<({Map<String, dynamic> user, String token})> register({
+    required String companyName,
+    String? industry,
+    required String ownerName,
+    required String ownerEmail,
+    required String ownerPassword,
+    required String ownerPasswordConfirmation,
+  }) async {
+    final res = await _client.post<Map<String, dynamic>>(
+      '/auth/register',
+      body: {
+        'company_name': companyName,
+        'industry': ?industry,
+        'owner_name': ownerName,
+        'owner_email': ownerEmail,
+        'owner_password': ownerPassword,
+        'owner_password_confirmation': ownerPasswordConfirmation,
+      },
+    );
+    final body = res.data ?? const {};
+    return (
+      user: (body['data'] as Map).cast<String, dynamic>(),
+      token: body['token'] as String,
+    );
+  }
+
   /// `GET auth/me` → `{ data: {...user} }`.
   Future<Map<String, dynamic>> me() async {
     final res = await _client.get<Map<String, dynamic>>('/auth/me');

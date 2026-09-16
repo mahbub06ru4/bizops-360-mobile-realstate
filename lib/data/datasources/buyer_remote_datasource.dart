@@ -7,6 +7,35 @@ import '../../core/network/api_envelope.dart';
 /// (`docs/HANDOFF.md` Phase 2); this class exists so wiring the real backend
 /// later is a one-file change, following this app's `USE_FAKE_DATA` /
 /// `FakeXRepository` convention (see `CLAUDE.md` rule 6).
+///
+/// **Phase 3 marketplace note (concrete backend requirement, not yet built):**
+/// `GET /buyer/projects` as drafted below still assumes a single scoped
+/// tenant. A genuine cross-tenant marketplace (roadmap §7 Phase 3 DoD — an
+/// unrelated second developer self-signs-up and appears in the marketplace)
+/// needs a **platform-level** endpoint instead, because
+/// `GET /api/v1/real-estate/projects` is tenant-scoped by `BelongsToTenant`'s
+/// global scope and a buyer session (no `tenant_id`) cannot call it as-is:
+/// ```
+/// GET /api/v1/real-estate/marketplace/projects?location=<query>
+/// ```
+/// - Bypasses the `BelongsToTenant` global scope entirely (a platform/public
+///   query, not a tenant query) — returns projects across every tenant.
+/// - Hard-filters to `status=verified` only server-side (never trust a client
+///   filter for what is publicly listable).
+/// - Gated by ordinary authenticated-buyer auth (whatever that session type
+///   ends up being — `docs/HANDOFF.md` Phase 2 flags no backend buyer-auth
+///   exists yet either), not by `industry:real_estate` + `tenant` like every
+///   other real-estate route.
+/// - Each project in the response should embed a lightweight `tenant`
+///   (`{id, name}`) or a top-level `developer_name` field so the listing can
+///   show which developer/agency it belongs to — `realEstateProjectFromJson`
+///   already reads either shape (`developer_name`, falling back to
+///   `tenant.name`).
+///
+/// [browseVerified] below is left calling the single-tenant `/buyer/projects`
+/// shape (matching the rest of this class) until that endpoint exists;
+/// [FakeBuyerRepository] is what actually demonstrates the multi-developer
+/// marketplace client-side today.
 class BuyerRemoteDataSource {
   BuyerRemoteDataSource(this._client);
 

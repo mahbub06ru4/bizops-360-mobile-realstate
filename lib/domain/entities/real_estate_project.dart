@@ -33,6 +33,7 @@ class RealEstateProject extends Equatable {
     this.contactName,
     this.contactPhone,
     this.createdAt,
+    this.developerName,
   });
 
   final String id;
@@ -48,6 +49,12 @@ class RealEstateProject extends Equatable {
   final String? contactName;
   final String? contactPhone;
   final DateTime? createdAt;
+
+  /// The tenant (developer/agency) this project belongs to — surfaced on the
+  /// cross-tenant buyer marketplace (roadmap §7 Phase 3) so a listing shows
+  /// who is selling it. Null for the seller-facing single-tenant screens,
+  /// which already know their own tenant from the session.
+  final String? developerName;
 
   /// Every unit across every building — a pure land-share project may instead
   /// keep its sellable inventory directly under a single implicit building,
@@ -73,6 +80,7 @@ class RealEstateProject extends Equatable {
     List<PaymentPlan>? paymentPlans,
     String? contactName,
     String? contactPhone,
+    String? developerName,
   }) => RealEstateProject(
     id: id,
     title: title ?? this.title,
@@ -87,6 +95,7 @@ class RealEstateProject extends Equatable {
     contactName: contactName ?? this.contactName,
     contactPhone: contactPhone ?? this.contactPhone,
     createdAt: createdAt,
+    developerName: developerName ?? this.developerName,
   );
 
   @override
@@ -104,5 +113,6 @@ class RealEstateProject extends Equatable {
     contactName,
     contactPhone,
     createdAt,
+    developerName,
   ];
 }

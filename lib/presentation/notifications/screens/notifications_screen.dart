@@ -89,6 +89,10 @@ class _Tile extends StatelessWidget {
     NotificationKind.visaDeadline => Icons.schedule_outlined,
     NotificationKind.documentExpiry => Icons.description_outlined,
     NotificationKind.general => Icons.notifications_none,
+    NotificationKind.propertyMatch => Icons.villa_outlined,
+    NotificationKind.offerUpdate => Icons.local_offer_outlined,
+    NotificationKind.siteVisitReminder => Icons.event_outlined,
+    NotificationKind.installmentDue => Icons.payments_outlined,
   };
 
   @override

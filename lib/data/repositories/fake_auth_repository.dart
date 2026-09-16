@@ -92,6 +92,53 @@ class FakeAuthRepository implements AuthRepository {
   );
 
   @override
+  Future<Result<AuthUser>> register({
+    required String companyName,
+    String? industry,
+    required String ownerName,
+    required String ownerEmail,
+    required String ownerPassword,
+    required String ownerPasswordConfirmation,
+  }) async {
+    if (ownerPassword != ownerPasswordConfirmation) {
+      return _delayed(
+        const Result.err(
+          ValidationFailure('Passwords do not match.', {
+            'owner_password_confirmation': ['Passwords do not match.'],
+          }),
+        ),
+      );
+    }
+    _signedIn = true;
+    _asBuyer = false;
+    final owner = AuthUser(
+      id: 9100,
+      name: ownerName,
+      email: ownerEmail,
+      roles: const ['owner'],
+      permissions: const [
+        'task.view',
+        'task.create',
+        'task.assign',
+        'customer.view',
+        'customer.update',
+        'real_estate_project.view',
+        'real_estate_project.create',
+        'real_estate_project.update',
+        'real_estate_project.submit',
+        'finance.view_reports',
+      ],
+      tenant: Tenant(
+        id: 9100,
+        name: companyName,
+        slug: companyName.toLowerCase().replaceAll(RegExp(r'\s+'), '-'),
+        industry: industry ?? 'real_estate',
+      ),
+    );
+    return _delayed(Result.ok(owner));
+  }
+
+  @override
   Future<Result<AuthUser>> continueAsBuyer() async {
     _signedIn = true;
     _asBuyer = true;

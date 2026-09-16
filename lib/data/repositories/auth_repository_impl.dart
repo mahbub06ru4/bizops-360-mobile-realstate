@@ -57,6 +57,33 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Result<AuthUser>> register({
+    required String companyName,
+    String? industry,
+    required String ownerName,
+    required String ownerEmail,
+    required String ownerPassword,
+    required String ownerPasswordConfirmation,
+  }) {
+    return _guard(() async {
+      final result = await _remote.register(
+        companyName: companyName,
+        industry: industry,
+        ownerName: ownerName,
+        ownerEmail: ownerEmail,
+        ownerPassword: ownerPassword,
+        ownerPasswordConfirmation: ownerPasswordConfirmation,
+      );
+      await _secureStore.writeToken(result.token);
+      try {
+        return authUserFromJson(await _remote.me());
+      } on DioException {
+        return authUserFromJson(result.user);
+      }
+    });
+  }
+
+  @override
   Future<Result<AuthUser>> continueAsBuyer() async {
     // No backend buyer-auth endpoint exists yet (see AuthRepository doc
     // comment) — surface a clear failure rather than pretending to succeed.

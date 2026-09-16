@@ -15,8 +15,8 @@ void main() {
     await controller.load();
     final state = controller.state.value;
     expect(state, isA<AsyncData<List<AppNotification>>>());
-    expect(state.valueOrNull, hasLength(5));
-    expect(controller.unreadCount, 2);
+    expect(state.valueOrNull, hasLength(9));
+    expect(controller.unreadCount, 5);
   });
 
   test('markAllRead clears the unread count', () async {
@@ -33,7 +33,7 @@ void main() {
       containsAll(['common.today', 'common.earlier']),
     );
     final total = groups.fold<int>(0, (n, g) => n + g.items.length);
-    expect(total, 5);
+    expect(total, 9);
   });
 
   test('opening an unread notification marks it read', () async {

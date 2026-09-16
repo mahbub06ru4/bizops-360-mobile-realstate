@@ -108,6 +108,16 @@ class ProjectDetailScreen extends GetView<ProjectDetailController> {
             AppStatusChip(p.status.labelKey.tr, tone: p.status.tone),
           ],
         ),
+        if (p.developerName != null) ...[
+          SizedBox(height: AppSpacing.xs),
+          Text(
+            p.developerName!,
+            style: text.bodyMedium?.copyWith(
+              color: c.brand,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
         if (p.description != null && p.description!.isNotEmpty) ...[
           SizedBox(height: AppSpacing.sm),
           Text(p.description!, style: text.bodyMedium),

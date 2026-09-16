@@ -1,4 +1,5 @@
 import '../../core/error/result.dart';
+import '../../core/routing/app_routes.dart';
 import '../../domain/entities/app_notification.dart';
 import '../../domain/repositories/notification_repository.dart';
 
@@ -50,6 +51,43 @@ class FakeNotificationRepository implements NotificationRepository {
         createdAt: now.subtract(const Duration(days: 2)),
         read: true,
         kind: NotificationKind.task,
+      ),
+      // Real-estate triggers (roadmap §7 Phase 3).
+      AppNotification(
+        id: '6',
+        title: 'New property match',
+        body: 'Khulshi Heights (A-3B) matches your saved requirement.',
+        createdAt: now.subtract(const Duration(minutes: 20)),
+        read: false,
+        kind: NotificationKind.propertyMatch,
+        route: Routes.propertyMatches,
+      ),
+      AppNotification(
+        id: '7',
+        title: 'Offer countered',
+        body: 'The seller countered your offer on Share #1.',
+        createdAt: now.subtract(const Duration(hours: 2)),
+        read: false,
+        kind: NotificationKind.offerUpdate,
+        route: Routes.offers,
+      ),
+      AppNotification(
+        id: '8',
+        title: 'Site visit tomorrow',
+        body: 'Site visit at Nasirabad Skyview Apartments, 11:00 AM.',
+        createdAt: now.subtract(const Duration(hours: 5)),
+        read: false,
+        kind: NotificationKind.siteVisitReminder,
+        route: Routes.siteVisits,
+      ),
+      AppNotification(
+        id: '9',
+        title: 'Installment overdue',
+        body: 'Installment #6 for booking bk1 is overdue.',
+        createdAt: now.subtract(const Duration(hours: 12)),
+        read: true,
+        kind: NotificationKind.installmentDue,
+        route: Routes.reBookings,
       ),
     ];
   }

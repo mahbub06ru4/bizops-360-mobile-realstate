@@ -29,4 +29,22 @@ abstract interface class AuthRepository {
   /// object carrying no `tenant`/`roles`); only [FakeAuthRepository]
   /// fabricates a session today.
   Future<Result<AuthUser>> continueAsBuyer();
+
+  /// Self-serve tenant onboarding (roadmap §7 Phase 3) — "Create your
+  /// business" on the sign-in screen. Confirmed live in `bizops360-api`:
+  /// `POST /api/v1/auth/register` `{company_name, industry?, owner_name,
+  /// owner_email, owner_password, owner_password_confirmation}` -> the same
+  /// `{data: {...user}, token}` envelope as `auth/login`. [industry] is
+  /// nullable and accepts `travel|real_estate|consultancy`; this app defaults
+  /// it to `real_estate` on the form but does not hardcode the field away.
+  /// On success the returned [AuthUser] is the new tenant's owner — the
+  /// caller proceeds to plan selection, then the normal staff shell.
+  Future<Result<AuthUser>> register({
+    required String companyName,
+    String? industry,
+    required String ownerName,
+    required String ownerEmail,
+    required String ownerPassword,
+    required String ownerPasswordConfirmation,
+  });
 }

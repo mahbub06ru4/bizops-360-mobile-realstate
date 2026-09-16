@@ -41,6 +41,14 @@ NotificationKind _kindFor(String type, Map<String, dynamic> payload) {
   if (type.contains('passport') || type.contains('document')) {
     return NotificationKind.documentExpiry;
   }
+  if (type.contains('propertymatch') || payload.containsKey('match_id')) {
+    return NotificationKind.propertyMatch;
+  }
+  if (type.contains('offer')) return NotificationKind.offerUpdate;
+  if (type.contains('sitevisit') || type.contains('site_visit')) {
+    return NotificationKind.siteVisitReminder;
+  }
+  if (type.contains('installment')) return NotificationKind.installmentDue;
   return NotificationKind.general;
 }
 

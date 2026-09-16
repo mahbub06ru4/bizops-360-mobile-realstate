@@ -318,6 +318,7 @@ abstract final class Tr {
   static const buyerCompareMinTwo = 'buyer.compare_min_two';
   static const buyerCompareNow = 'buyer.compare_now';
   static const buyerComparePrice = 'buyer.compare_price';
+  static const buyerCompareDeveloper = 'buyer.compare_developer';
   static const buyerCompareLocation = 'buyer.compare_location';
   static const buyerCompareUnitTypes = 'buyer.compare_unit_types';
   static const buyerCompareAmenities = 'buyer.compare_amenities';
@@ -480,6 +481,13 @@ abstract final class Tr {
   static const homeQaCheckIn = 'home.qa_check_in';
   static const homeQaNewProject = 'home.qa_new_project';
   static const homeNothingToday = 'home.nothing_today';
+  static const homeSalesOverview = 'home.sales_overview';
+  static const homeSalesBookings = 'home.sales_bookings';
+  static const homeSalesCollected = 'home.sales_collected';
+  static const homeSalesPending = 'home.sales_pending';
+  static const homeInventoryAvailable = 'home.inventory_available';
+  static const homeInventoryReserved = 'home.inventory_reserved';
+  static const homeInventorySold = 'home.inventory_sold';
 
   // Settings
   static const settingsTitle = 'settings.title';
@@ -488,6 +496,28 @@ abstract final class Tr {
   static const settingsThemeLight = 'settings.theme_light';
   static const settingsThemeDark = 'settings.theme_dark';
   static const settingsLanguage = 'settings.language';
+
+  // Self-serve tenant registration + plan selection (roadmap §7 Phase 3)
+  static const registerCta = 'register.cta';
+  static const registerTitle = 'register.title';
+  static const registerSubtitle = 'register.subtitle';
+  static const registerCompanyName = 'register.company_name';
+  static const registerIndustry = 'register.industry';
+  static const registerOwnerName = 'register.owner_name';
+  static const registerOwnerEmail = 'register.owner_email';
+  static const registerPassword = 'register.password';
+  static const registerPasswordConfirm = 'register.password_confirm';
+  static const registerSubmit = 'register.submit';
+  static const registerRequired = 'register.required';
+  static const registerPasswordTooShort = 'register.password_too_short';
+  static const registerPasswordMismatch = 'register.password_mismatch';
+  static const industryRealEstate = 'industry.real_estate';
+  static const industryTravel = 'industry.travel';
+  static const industryConsultancy = 'industry.consultancy';
+  static const planTitle = 'plan.title';
+  static const planSubtitle = 'plan.subtitle';
+  static const planEmpty = 'plan.empty';
+  static const planContinue = 'plan.continue';
 
   // Placeholder copy
   static const comingSoon = 'home.coming_soon';

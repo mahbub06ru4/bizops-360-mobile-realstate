@@ -6,15 +6,20 @@ import '../core/network/auth_interceptor.dart';
 import '../core/storage/kv_store.dart';
 import '../core/storage/secure_store.dart';
 import '../data/datasources/auth_remote_datasource.dart';
+import '../data/datasources/billing_remote_datasource.dart';
 import '../data/datasources/device_remote_datasource.dart';
 import '../data/repositories/auth_repository_impl.dart';
+import '../data/repositories/billing_repository_impl.dart';
 import '../data/repositories/device_repository_impl.dart';
 import '../data/repositories/fake_auth_repository.dart';
+import '../data/repositories/fake_billing_repository.dart';
 import '../data/repositories/fake_device_repository.dart';
 import '../domain/repositories/auth_repository.dart';
+import '../domain/repositories/billing_repository.dart';
 import '../domain/repositories/device_repository.dart';
 import '../domain/usecases/auth/continue_as_buyer_usecase.dart';
 import '../domain/usecases/auth/load_session_usecase.dart';
+import '../domain/usecases/auth/register_usecase.dart';
 import '../domain/usecases/auth/sign_in_usecase.dart';
 import '../domain/usecases/auth/sign_out_usecase.dart';
 import 'auth/auth_controller.dart';
@@ -47,6 +52,8 @@ class AppBinding extends Bindings {
       ContinueAsBuyerUseCase(Get.find()),
       permanent: true,
     );
+    Get.put<RegisterUseCase>(RegisterUseCase(Get.find()), permanent: true);
+    _wireBillingRepository();
 
     Get.put<AuthController>(
       AuthController(loadSession: Get.find(), signOut: Get.find()),
@@ -83,6 +90,17 @@ class AppBinding extends Bindings {
     );
     Get.put<DeviceRepository>(
       DeviceRepositoryImpl(DeviceRemoteDataSource(Get.find())),
+      permanent: true,
+    );
+  }
+
+  void _wireBillingRepository() {
+    if (Env.useFakeData) {
+      Get.put<BillingRepository>(FakeBillingRepository(), permanent: true);
+      return;
+    }
+    Get.put<BillingRepository>(
+      BillingRepositoryImpl(BillingRemoteDataSource(Get.find<ApiClient>())),
       permanent: true,
     );
   }

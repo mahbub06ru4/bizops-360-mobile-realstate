@@ -226,5 +226,10 @@ RealEstateProject realEstateProjectFromJson(Map<String, dynamic> json) {
         ? contact['phone'] as String?
         : json['contact_phone'] as String?,
     createdAt: _date(json['created_at']),
+    developerName:
+        json['developer_name'] as String? ??
+        (json['tenant'] is Map
+            ? (json['tenant'] as Map)['name'] as String?
+            : null),
   );
 }

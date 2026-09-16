@@ -36,6 +36,7 @@ class CompareScreen extends GetView<CompareController> {
                     label: '',
                     rows: const [
                       '',
+                      Tr.buyerCompareDeveloper,
                       Tr.buyerComparePrice,
                       Tr.buyerCompareLocation,
                       Tr.buyerCompareUnitTypes,
@@ -120,6 +121,7 @@ class _ProjectColumn extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            _row(context, project.developerName ?? '—'),
             _row(
               context,
               project.pricing?.estimatedTotal.toBdt(decimals: false) ?? '—',
