@@ -50,6 +50,17 @@ import '../../presentation/hr/screens/leave_screen.dart';
 import '../../presentation/hr/screens/office_location_screen.dart';
 import '../../presentation/notifications/bindings/notifications_binding.dart';
 import '../../presentation/notifications/screens/notifications_screen.dart';
+import '../../presentation/organization/branches/bindings/branches_binding.dart';
+import '../../presentation/organization/branches/screens/branches_screen.dart';
+import '../../presentation/organization/departments/bindings/departments_binding.dart';
+import '../../presentation/organization/departments/screens/departments_screen.dart';
+import '../../presentation/organization/designations/bindings/designations_binding.dart';
+import '../../presentation/organization/designations/screens/designations_screen.dart';
+import '../../presentation/organization/teams/bindings/teams_binding.dart';
+import '../../presentation/organization/teams/screens/team_members_screen.dart';
+import '../../presentation/organization/teams/screens/teams_screen.dart';
+import '../../presentation/organization/users/bindings/users_binding.dart';
+import '../../presentation/organization/users/screens/users_screen.dart';
 import '../../presentation/profile/screens/profile_screen.dart';
 import '../../presentation/reports/bindings/reports_binding.dart';
 import '../../presentation/reports/screens/reports_screen.dart';
@@ -61,6 +72,8 @@ import '../../presentation/splash/splash_screen.dart';
 import '../../presentation/tasks/bindings/task_detail_binding.dart';
 import '../../presentation/tasks/screens/task_detail_screen.dart';
 import '../../presentation/team/bindings/team_binding.dart';
+import '../../presentation/team/screens/employee_detail_screen.dart';
+import '../../presentation/team/screens/employee_form_screen.dart';
 import '../../presentation/team/screens/team_screen.dart';
 import 'app_routes.dart';
 import 'route_guard.dart';
@@ -256,6 +269,46 @@ abstract final class AppPages {
       binding: InvoiceDetailBinding(),
     ),
     _guarded(Routes.team, () => const TeamScreen(), binding: TeamBinding()),
+    _guarded(
+      Routes.employeeDetail,
+      () => const EmployeeDetailScreen(),
+      binding: EmployeeDetailBinding(),
+    ),
+    _guarded(
+      Routes.employeeForm,
+      () => const EmployeeFormScreen(),
+      binding: EmployeeFormBinding(),
+    ),
+    _guarded(
+      Routes.orgBranches,
+      () => const BranchesScreen(),
+      binding: BranchesBinding(),
+    ),
+    _guarded(
+      Routes.orgDepartments,
+      () => const DepartmentsScreen(),
+      binding: DepartmentsBinding(),
+    ),
+    _guarded(
+      Routes.orgDesignations,
+      () => const DesignationsScreen(),
+      binding: DesignationsBinding(),
+    ),
+    _guarded(
+      Routes.orgTeams,
+      () => const TeamsScreen(),
+      binding: TeamsBinding(),
+    ),
+    _guarded(
+      Routes.teamMembers,
+      () => const TeamMembersScreen(),
+      binding: TeamMembersBinding(),
+    ),
+    _guarded(
+      Routes.orgUsers,
+      () => const UsersScreen(),
+      binding: UsersBinding(),
+    ),
     _guarded(
       Routes.holidays,
       () => const HolidaysScreen(),

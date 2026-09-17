@@ -43,6 +43,14 @@ abstract final class Routes {
   static const invoices = '/invoices';
   static const invoiceDetail = '/invoice';
   static const team = '/team';
+  static const employeeDetail = '/employee';
+  static const employeeForm = '/employee/form';
+  static const orgBranches = '/org/branches';
+  static const orgDepartments = '/org/departments';
+  static const orgDesignations = '/org/designations';
+  static const orgTeams = '/org/teams';
+  static const teamMembers = '/org/teams/members';
+  static const orgUsers = '/org/users';
   static const holidays = '/holidays';
 
   // Workspace destinations

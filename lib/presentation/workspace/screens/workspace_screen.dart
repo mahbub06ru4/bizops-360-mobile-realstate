@@ -130,6 +130,36 @@ class WorkspaceScreen extends StatelessWidget {
               permission: Perm.employeeView,
             ),
             _Row(
+              Icons.store_mall_directory_outlined,
+              Tr.wsBranches.tr,
+              () => Get.toNamed<void>(Routes.orgBranches),
+              permission: Perm.branchView,
+            ),
+            _Row(
+              Icons.account_tree_outlined,
+              Tr.wsDepartments.tr,
+              () => Get.toNamed<void>(Routes.orgDepartments),
+              permission: Perm.departmentView,
+            ),
+            _Row(
+              Icons.badge_outlined,
+              Tr.wsDesignations.tr,
+              () => Get.toNamed<void>(Routes.orgDesignations),
+              permission: Perm.designationView,
+            ),
+            _Row(
+              Icons.diversity_3_outlined,
+              Tr.wsOrgTeams.tr,
+              () => Get.toNamed<void>(Routes.orgTeams),
+              permission: Perm.teamView,
+            ),
+            _Row(
+              Icons.manage_accounts_outlined,
+              Tr.wsUsers.tr,
+              () => Get.toNamed<void>(Routes.orgUsers),
+              permission: Perm.userView,
+            ),
+            _Row(
               Icons.campaign_outlined,
               Tr.navFollowUps.tr,
               () => Get.toNamed<void>(Routes.followUps),

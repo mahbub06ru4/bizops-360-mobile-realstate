@@ -6,27 +6,32 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    'TeamController search matches name, designation or department',
+    'TeamController pages the directory and applies server-side search',
     () async {
       final c = TeamController(FakeEmployeeRepository());
-      await c.load();
-      final total = c.visible.length;
+      // onInit (which kicks off the first reload()) only runs under Get's
+      // lifecycle — drive the paging controller directly in a plain unit test.
+      await c.paging.reload();
+      final total = c.paging.items.length;
       expect(total, greaterThan(0));
+      expect(c.paging.hasMore.value, isFalse);
 
-      c.query.value = 'sales';
-      expect(c.visible, isNotEmpty);
+      c.query.value = 'rahim';
+      await c.paging.reload();
+      expect(c.paging.items, isNotEmpty);
       expect(
-        c.visible.every(
+        c.paging.items.every(
           (e) =>
-              e.name.toLowerCase().contains('sales') ||
-              (e.designation?.toLowerCase().contains('sales') ?? false) ||
-              (e.department?.toLowerCase().contains('sales') ?? false),
+              e.name.toLowerCase().contains('rahim') ||
+              e.employeeCode.toLowerCase().contains('rahim') ||
+              (e.email?.toLowerCase().contains('rahim') ?? false),
         ),
         isTrue,
       );
 
       c.query.value = 'zzz-no-match';
-      expect(c.visible, isEmpty);
+      await c.paging.reload();
+      expect(c.paging.items, isEmpty);
     },
   );
 

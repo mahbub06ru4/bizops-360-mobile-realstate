@@ -382,8 +382,63 @@ abstract final class Tr {
   static const teamTitle = 'team.title';
   static const teamSearch = 'team.search';
   static const empStatusActive = 'team.status_active';
+  static const empStatusProbation = 'team.status_probation';
   static const empStatusOnLeave = 'team.status_on_leave';
-  static const empStatusInactive = 'team.status_inactive';
+  static const empStatusTerminated = 'team.status_terminated';
+
+  // Employee detail / form
+  static const empDetailTitle = 'emp.detail_title';
+  static const empCreateTitle = 'emp.create_title';
+  static const empEditTitle = 'emp.edit_title';
+  static const empCode = 'emp.code';
+  static const empFirstName = 'emp.first_name';
+  static const empLastName = 'emp.last_name';
+  static const empEmail = 'emp.email';
+  static const empPhone = 'emp.phone';
+  static const empHireDate = 'emp.hire_date';
+  static const empBranch = 'emp.branch';
+  static const empDepartment = 'emp.department';
+  static const empDesignation = 'emp.designation';
+  static const empCreated = 'emp.created';
+  static const empUpdated = 'emp.updated';
+  static const empTerminate = 'emp.terminate';
+  static const empTerminated = 'emp.terminated';
+  static const empTerminateConfirmTitle = 'emp.terminate_confirm_title';
+  static const empTerminateConfirmBody = 'emp.terminate_confirm_body';
+  static const formRequiredFields = 'form.required_fields';
+
+  // Common actions
+  static const edit = 'common.edit';
+  static const delete = 'common.delete';
+
+  // Organization (branches / departments / designations / teams / users)
+  static const orgBranches = 'org.branches';
+  static const orgDepartments = 'org.departments';
+  static const orgDesignations = 'org.designations';
+  static const orgTeams = 'org.teams';
+  static const orgUsers = 'org.users';
+  static const orgTeamMembers = 'org.team_members';
+  static const orgAddBranch = 'org.add_branch';
+  static const orgEditBranch = 'org.edit_branch';
+  static const orgAddDepartment = 'org.add_department';
+  static const orgEditDepartment = 'org.edit_department';
+  static const orgAddDesignation = 'org.add_designation';
+  static const orgEditDesignation = 'org.edit_designation';
+  static const orgAddTeam = 'org.add_team';
+  static const orgEditTeam = 'org.edit_team';
+  static const orgName = 'org.name';
+  static const orgCode = 'org.code';
+  static const orgAddress = 'org.address';
+  static const orgDescription = 'org.description';
+  static const orgTitle = 'org.title_field';
+  static const orgRank = 'org.rank';
+  static const orgHeadOffice = 'org.head_office';
+  static const orgSaved = 'org.saved';
+  static const orgDeleted = 'org.deleted';
+  static const orgDeleteConfirmTitle = 'org.delete_confirm_title';
+  static const orgDeleteConfirmBody = 'org.delete_confirm_body';
+  static const orgMembersCount = 'org.members_count';
+  static const orgAssignRoles = 'org.assign_roles';
 
   // Holidays
   static const holidaysTitle = 'hol.title';
@@ -451,6 +506,11 @@ abstract final class Tr {
   static const wsExpenses = 'workspace.expenses';
   static const wsDocuments = 'workspace.documents';
   static const wsTeam = 'workspace.team';
+  static const wsBranches = 'workspace.branches';
+  static const wsDepartments = 'workspace.departments';
+  static const wsDesignations = 'workspace.designations';
+  static const wsOrgTeams = 'workspace.org_teams';
+  static const wsUsers = 'workspace.users';
   static const wsCrm = 'workspace.crm';
   static const wsReports = 'workspace.reports';
   static const wsApprovals = 'workspace.approvals';

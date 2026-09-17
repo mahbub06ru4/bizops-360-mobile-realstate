@@ -7,7 +7,37 @@
 abstract final class Perm {
   // Organisation / people
   static const employeeView = 'employee.view';
+  static const employeeCreate = 'employee.create';
   static const employeeManage = 'employee.update';
+  static const employeeTerminate = 'employee.terminate';
+  static const employeeDelete = 'employee.delete';
+
+  static const branchView = 'branch.view';
+  static const branchCreate = 'branch.create';
+  static const branchManage = 'branch.update';
+  static const branchDelete = 'branch.delete';
+
+  static const departmentView = 'department.view';
+  static const departmentCreate = 'department.create';
+  static const departmentManage = 'department.update';
+  static const departmentDelete = 'department.delete';
+
+  static const designationView = 'designation.view';
+  static const designationCreate = 'designation.create';
+  static const designationManage = 'designation.update';
+  static const designationDelete = 'designation.delete';
+
+  static const teamView = 'team.view';
+  static const teamCreate = 'team.create';
+  static const teamManage = 'team.update';
+  static const teamDelete = 'team.delete';
+
+  static const userView = 'user.view';
+  static const userCreate = 'user.create';
+  static const userManage = 'user.update';
+  static const userAssignRoles = 'user.assign_roles';
+  static const userDelete = 'user.delete';
+  static const roleView = 'role.view';
 
   // Tasks & operations
   static const taskView = 'task.view';
